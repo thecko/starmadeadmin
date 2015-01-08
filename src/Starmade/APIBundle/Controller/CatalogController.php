@@ -1,10 +1,10 @@
-n<?php
+<?php
 
 namespace Starmade\APIBundle\Controller;
 
 //use Acme\DemoBundle\Form\NoteType;
-use Starmade\DemoBundle\Model\Blueprint;
-use Starmade\DemoBundle\Model\BlueprintCollection;
+use Starmade\APIBundle\Model\Blueprint;
+use Starmade\APIBundle\Model\BlueprintCollection;
 
 use FOS\RestBundle\Util\Codes;
 
@@ -56,7 +56,7 @@ class CatalogController extends FOSRestController
      *
      * @return array
      */
-    public function getBlueprintsAction(Request $request, ParamFetcherInterface $paramFetcher)
+    public function getCatalogAction(Request $request, ParamFetcherInterface $paramFetcher)
     {
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;

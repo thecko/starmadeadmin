@@ -4,7 +4,7 @@ namespace Starmade\APIBundle;
 
 use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 
-class BlueprintManager
+class CatalogManager
 {
     /** @var array notes */
     protected $data = array();

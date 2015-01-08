@@ -1,0 +1,34 @@
+Starmade\APIBundle\Model\BlueprintCollection:
+  exclusion_policy: ALL
+  xml_root_name: blueprints
+  properties:
+    notes:
+      expose: true
+      type: array<Starmade\APIBundle\Model\Blueprint>
+      xml_list:
+        inline: true
+        entry_name: note
+    offset:
+      expose: true
+      type: integer
+      xml_attribute: true
+    limit:
+      expose: true
+      type: integer
+      xml_attribute: true
+  relations:
+    -
+      rel: self
+      href:
+        route: get_catalog
+        absolute: true
+    -
+      rel: blueprint
+      href:
+        route: get_blueprint
+        absolute: true
+        generator: templated_uri
+        parameters:
+          id: "{id}"
+      attributes:
+        templated: true
