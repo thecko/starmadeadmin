@@ -63,7 +63,7 @@ class CatalogController extends FOSRestController
         $limit = $paramFetcher->get('limit');
 
         $blueprints = $this->getCatalogManager()->fetch($start, $limit);
-
+        
         return new BlueprintCollection($blueprints, $offset, $limit);
     }
 

@@ -13,3 +13,5 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    starmade_dir: /home/theck/areagamer/starmade/server/starmade
