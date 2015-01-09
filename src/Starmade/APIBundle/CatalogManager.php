@@ -4,6 +4,8 @@ namespace Starmade\APIBundle;
 
 use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 
+use Starmade\APIBundle\Resources\SMDecoder;
+
 class CatalogManager
 {
     /** @var array notes */
