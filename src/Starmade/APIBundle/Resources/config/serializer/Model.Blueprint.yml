@@ -1,6 +1,6 @@
 Starmade\APIBundle\Model\Blueprint:
   exclusion_policy: ALL
-  xml_root_name: note
+  xml_root_name: blueprint
   properties:
     name:
       expose: true
@@ -29,5 +29,5 @@ Starmade\APIBundle\Model\Blueprint:
       href:
         route: get_blueprint
         parameters:
-          id: expr(object.id)
+          id: expr(object.uniqueid)
         absolute: true

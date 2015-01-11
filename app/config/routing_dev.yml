@@ -9,8 +9,8 @@ _demo_note:
     resource: "@AcmeDemoBundle/Controller/NoteController.php"
     type:     rest
 
-_catalog:
-    resource: "@APIBundle/Controller/CatalogController.php"
+_blueprints:
+    resource: "@APIBundle/Controller/BlueprintsController.php"
     type:     rest
     
 _wdt:

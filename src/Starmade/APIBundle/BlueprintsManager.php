@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 use Starmade\APIBundle\Resources\SMDecoder;
 use Starmade\APIBundle\Model\Blueprint;
 
-class CatalogManager {
+class BlueprintsManager {
 
     /** @var array notes */
     protected $data = array();
@@ -82,15 +82,15 @@ class CatalogManager {
         $smDecoder = new SMDecoder();
         
 //        $game_dir = $this->getContainer()->getParameter("starmade_dir");
-        $game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
-        $catalog = $smDecoder->decodeSMFile( $game_dir . "/server-database/CATALOG.cat");
+        $game_dir = "F:/areagamer/starmade/server/starmade/StarMade";
+        $blueprints = $smDecoder->decodeSMFile( $game_dir . "/server-database/CATALOG.cat");
 //        echo "<pre>";
 //        print_r( $catalog);
 //        echo "</pre>";
 
         $data = array();
 
-        foreach ($catalog["cv0"]["pv0"] as $rawBlueprint) {
+        foreach ($blueprints["cv0"]["pv0"] as $rawBlueprint) {
             /*
               [0] => AF-011 Wasp It4  // Blueprint name
               [1] => FrankRa          // Author

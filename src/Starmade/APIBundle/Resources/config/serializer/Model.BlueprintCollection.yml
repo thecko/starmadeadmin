@@ -2,7 +2,7 @@ Starmade\APIBundle\Model\BlueprintCollection:
   exclusion_policy: ALL
   xml_root_name: blueprints
   properties:
-    notes:
+    blueprints:
       expose: true
       type: array<Starmade\APIBundle\Model\Blueprint>
       xml_list:
@@ -20,7 +20,7 @@ Starmade\APIBundle\Model\BlueprintCollection:
     -
       rel: self
       href:
-        route: get_catalog
+        route: get_blueprints
         absolute: true
     -
       rel: blueprint
@@ -29,6 +29,6 @@ Starmade\APIBundle\Model\BlueprintCollection:
         absolute: true
         generator: templated_uri
         parameters:
-          id: "{id}"
+          id: "{uniqueid}"
       attributes:
         templated: true

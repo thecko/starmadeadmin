@@ -21,19 +21,19 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Rest controller for blueprint catalog
+ * Rest controller for blueprints catalog
  *
  * @package Starmade\APIBundle\Controller
  * @author Theck <jumptard.theck@gmail.com>
  */
-class CatalogController extends FOSRestController
+class BlueprintsController extends FOSRestController
 {
     /**
-     * return \Starmade\APIBundle\CatalogManager
+     * return \Starmade\APIBundle\BlueprintsManager
      */
-    public function getCatalogManager()
+    public function getBlueprintsManager()
     {
-        return $this->get('starmade.api.catalog_manager');
+        return $this->get('starmade.api.blueprints_manager');
     }
 
     /**
@@ -56,13 +56,13 @@ class CatalogController extends FOSRestController
      *
      * @return array
      */
-    public function getCatalogAction(Request $request, ParamFetcherInterface $paramFetcher)
+    public function getBlueprintsAction(Request $request, ParamFetcherInterface $paramFetcher)
     {
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $blueprints = $this->getCatalogManager()->fetch($start, $limit);
+        $blueprints = $this->getBlueprintsManager()->fetch($start, $limit);
         
         return new BlueprintCollection($blueprints, $offset, $limit);
     }
@@ -89,7 +89,7 @@ class CatalogController extends FOSRestController
      */
     public function getBlueprintAction(Request $request, $id)
     {
-        $blueprint = $this->getCatalogManager()->get($id);
+        $blueprint = $this->getBlueprintsManager()->get($id);
         if (false === $blueprint) {
             throw $this->createNotFoundException("Blueprint does not exist.");
         }

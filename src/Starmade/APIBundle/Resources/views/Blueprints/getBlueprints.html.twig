@@ -1,0 +1,25 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "Starmade - Blueprints" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'blueprints.list.headline'|trans({}, 'APIBundle') }}</h1>
+
+    <p>
+        {{ 'blueprints.offset'|trans({}, 'APIDemoBundle') }}: {{ data.offset ?: '-' }}, {{ 'blueprints.limit'|trans({}, 'APIBundle') }}: {{ data.limit }}
+    </p>
+
+    <ul id="note-list">
+        {% for id, blueprint in data.blueprints %}
+        <li>
+            <a href="{{ path('get_blueprint', {'id': id}) }}">{{ blueprint }}</a>
+        </li>
+        {% else %}
+        <li>{{ 'blueprints.list.empty'|trans({}, 'APIBundle') }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% set code = code(_self) %}

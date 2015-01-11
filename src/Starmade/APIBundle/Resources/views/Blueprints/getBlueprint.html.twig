@@ -1,0 +1,16 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "starmade - Blueprints" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">Blueprint #{{ id }}</h1>
+
+    <p>{{ blueprint }}</p>
+    <p>
+        <a href="{{ path('get_blueprints') }}">{{ 'blueprints.list.link'|trans({}, 'APIDemoBundle') }}</a> <br>
+    </p>
+{% endblock %}
+
+{% set code = code(_self) %}
