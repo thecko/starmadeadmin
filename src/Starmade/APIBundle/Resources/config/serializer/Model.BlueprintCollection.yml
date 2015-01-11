@@ -7,7 +7,7 @@ Starmade\APIBundle\Model\BlueprintCollection:
       type: array<Starmade\APIBundle\Model\Blueprint>
       xml_list:
         inline: true
-        entry_name: note
+        entry_name: blueprint
     offset:
       expose: true
       type: integer

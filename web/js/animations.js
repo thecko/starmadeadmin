@@ -1,0 +1,2 @@
+angular.module('starMadeAdminAnimations', ['ngAnimate']);
+

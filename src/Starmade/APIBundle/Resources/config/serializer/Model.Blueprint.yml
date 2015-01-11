@@ -2,6 +2,10 @@ Starmade\APIBundle\Model\Blueprint:
   exclusion_policy: ALL
   xml_root_name: blueprint
   properties:
+    uniqueid:
+        expose: true
+        type: string
+        groups: [standard, restapi]
     name:
       expose: true
       type: string

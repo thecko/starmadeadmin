@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      Search: <input ng-model="query">
+      Sort by:
+      <select ng-model="orderProp">
+        <option value="name">Alphabetical</option>
+        <option value="uniqueId">Id</option>
+      </select>
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>name</th>
+          </tr>          
+        </thead>
+        <tbody>
+          <tr ng-repeat="blueprint in blueprints.blueprints | filter:query | orderBy:orderProp">
+            <td>{{blueprint.uniqueid}}</td>
+            <td>
+              <a href="#/blueprints/{{blueprint.uniqueid}}">
+                {{blueprint.name}}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

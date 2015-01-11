@@ -8,10 +8,6 @@ _welcome:
 _demo_note:
     resource: "@AcmeDemoBundle/Controller/NoteController.php"
     type:     rest
-
-_blueprints:
-    resource: "@APIBundle/Controller/BlueprintsController.php"
-    type:     rest
     
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"

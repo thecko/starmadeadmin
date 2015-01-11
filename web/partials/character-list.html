@@ -1,0 +1,40 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      Search: <input ng-model="query">
+      Sort by:
+      <select ng-model="orderProp">
+        <option value="name">Alphabetical</option>
+        <option value="uniqueId">Id</option>
+        <option value="credits">Credits</option>
+      </select>
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>credits</th>
+          </tr>          
+        </thead>
+        <tbody>
+          <tr ng-repeat="character in characters | filter:query | orderBy:orderProp">
+            <td>{{character.uniqueId}}</td>
+            <td>
+              <a href="#/characters/{{character.uniqueId}}">
+                {{character.name}}
+              </a>
+            </td>
+            <td>{{character.credits}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

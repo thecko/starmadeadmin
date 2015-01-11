@@ -38,7 +38,7 @@ class BlueprintsManager {
     }
 
     public function fetch($start = 0, $limit = 5) {
-        return array_slice($this->data, $start, $limit, true);
+        return array_values( array_slice($this->data, $start, $limit, true) );
     }
 
     public function get($id) {
