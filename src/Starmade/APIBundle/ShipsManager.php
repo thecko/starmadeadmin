@@ -84,17 +84,18 @@ class ShipsManager {
         $smDecoder = new SMDecoder();
 
 //        $game_dir = $this->getContainer()->getParameter("starmade_dir");
-        $game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
+        $game_dir = "/data/xavi/areagamer/starmade/server/starmade/StarMade";
 
         $prefix = "ENTITY_SHIP_"; //$this->getPrefix();
         //exec( "ls " . STARMADE_DIR . "/server-database/DATA/ENTITY_SHIP_*" , $shipFiles );
-        $entityFiles = glob($game_dir . "/server-database/201412/" . $prefix . "*");
+        $entityFiles = glob($game_dir . "/db/201412/" . $prefix . "*");
+        
+        $data = array();
 
         if (!$entityFiles) {
-            return null;
+            return $data;
         }
 
-        $data = array();
 
         foreach ($entityFiles as $count => $entityFile) {
             $entity = $this->createEntity($entityFile);

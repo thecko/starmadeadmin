@@ -63,7 +63,7 @@ class ShipsController extends FOSRestController
 
         $ships = $this->getShipsManager()->fetch($start, $limit);
         
-        return new ShipsCollection($ships, $offset, $limit);
+        return new ShipCollection($ships, $offset, $limit);
     }
 
     /**
