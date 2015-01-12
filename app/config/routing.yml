@@ -5,3 +5,6 @@ NelmioApiDocBundle:
 _blueprints:
     resource: "@APIBundle/Controller/BlueprintsController.php"
     type:     rest
+_ships:
+    resource: "@APIBundle/Controller/ShipsController.php"
+    type:     rest

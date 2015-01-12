@@ -1,0 +1,34 @@
+Starmade\APIBundle\Model\ShipCollection:
+  exclusion_policy: ALL
+  xml_root_name: ships
+  properties:
+    blueprints:
+      expose: true
+      type: array<Starmade\APIBundle\Model\Ship>
+      xml_list:
+        inline: true
+        entry_name: ship
+    offset:
+      expose: true
+      type: integer
+      xml_attribute: true
+    limit:
+      expose: true
+      type: integer
+      xml_attribute: true
+  relations:
+    -
+      rel: self
+      href:
+        route: get_ship
+        absolute: true
+    -
+      rel: ship
+      href:
+        route: get_ship
+        absolute: true
+        generator: templated_uri
+        parameters:
+          id: "{uniqueid}"
+      attributes:
+        templated: true

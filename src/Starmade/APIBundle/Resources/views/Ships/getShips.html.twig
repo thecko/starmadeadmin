@@ -1,0 +1,25 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "Starmade - Ships" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'ships.list.headline'|trans({}, 'APIBundle') }}</h1>
+
+    <p>
+        {{ 'ships.offset'|trans({}, 'APIDemoBundle') }}: {{ data.offset ?: '-' }}, {{ 'ships.limit'|trans({}, 'APIBundle') }}: {{ data.limit }}
+    </p>
+
+    <ul id="ship-list">
+        {% for id, ship in data.ships %}
+        <li>
+            <a href="{{ path('get_ship', {'id': id}) }}">{{ ship }}</a>
+        </li>
+        {% else %}
+        <li>{{ 'ships.list.empty'|trans({}, 'APIBundle') }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% set code = code(_self) %}

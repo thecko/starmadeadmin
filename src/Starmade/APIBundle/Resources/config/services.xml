@@ -9,5 +9,9 @@
             <argument type="service" id="security.secure_random" />
             <argument>%kernel.cache_dir%</argument>
         </service>
+        <service id="starmade.api.ships_manager" class="Starmade\APIBundle\ShipsManager" public="true">
+            <argument type="service" id="security.secure_random" />
+            <argument>%kernel.cache_dir%</argument>
+        </service>
     </services>
 </container>

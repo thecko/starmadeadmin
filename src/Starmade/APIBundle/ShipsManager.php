@@ -4,11 +4,11 @@ namespace Starmade\APIBundle;
 
 use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 use Starmade\APIBundle\Resources\SMDecoder;
-use Starmade\APIBundle\Model\Blueprint;
+use Starmade\APIBundle\Model\Ship;
 
-class BlueprintsManager {
+class ShipsManager {
 
-    /** @var array notes */
+    /** @var array data */
     protected $data = array();
 
     /**
@@ -25,8 +25,8 @@ class BlueprintsManager {
         $this->randomGenerator = $randomGenerator;
         $this->cacheDir = $cacheDir;
         
-        if (file_exists($cacheDir . '/sm_blueprint_data')) {
-            $data = file_get_contents($cacheDir . '/sm_blueprint_data');
+        if (file_exists($cacheDir . '/sm_ship_data')) {
+            $data = file_get_contents($cacheDir . '/sm_ship_data');
             $this->data = unserialize($data);
         } else {
             $this->data = $this->parseGameData();
@@ -36,7 +36,7 @@ class BlueprintsManager {
     }
 
     private function flush() {
-        file_put_contents($this->cacheDir . '/sm_blueprint_data', serialize($this->data));
+        file_put_contents($this->cacheDir . '/sm_ship_data', serialize($this->data));
     }
 
     public function fetch($start = 0, $limit = 5) {
@@ -82,45 +82,38 @@ class BlueprintsManager {
 
     protected function parseGameData() {
         $smDecoder = new SMDecoder();
-        
+
 //        $game_dir = $this->getContainer()->getParameter("starmade_dir");
         $game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
-        $blueprints = $smDecoder->decodeSMFile( $game_dir . "/server-database/201412/CATALOG.cat");
-//        echo "<pre>";
-//        print_r( $catalog);
-//        echo "</pre>";
+
+        $prefix = "ENTITY_SHIP_"; //$this->getPrefix();
+        //exec( "ls " . STARMADE_DIR . "/server-database/DATA/ENTITY_SHIP_*" , $shipFiles );
+        $entityFiles = glob($game_dir . "/server-database/201412/" . $prefix . "*");
+
+        if (!$entityFiles) {
+            return null;
+        }
 
         $data = array();
 
-        foreach ($blueprints["cv0"]["pv0"] as $rawBlueprint) {
-            /*
-              [0] => AF-011 Wasp It4  // Blueprint name
-              [1] => FrankRa          // Author
-              [2] => 0                // ¿?
-              [3] => 930886           // Cost
-              [4] => no descrption... // Description
-              [5] => 0                // ¿?
-              [6] => 0                // ¿?
-             */
-
-            $uniqueid = md5($rawBlueprint[0]);
-            $name = $rawBlueprint[0];
-            $description = $rawBlueprint[4];
-            $author = $rawBlueprint[1];
-            $cost = $rawBlueprint[3];
-            
-            $blueprint = new Blueprint(
-                    $uniqueid
-                    , $name
-                    , $description
-                    , $author
-                    , $cost
-            );
-
-            $data[$blueprint->uniqueid] = $blueprint;
-            
+        foreach ($entityFiles as $count => $entityFile) {
+            $entity = $this->createEntity($entityFile);
+            $data[$entity->uniqueid] = $entity;
         }
-        
+
         return $data;
+    }
+
+    protected function createEntity($file) {
+        $decoder = new SMDecoder();
+
+        $shipEntity = $decoder->decodeSMFile($file);
+
+        $name = $shipEntity["sc"]["realname"];
+        $uniqueid = $shipEntity["sc"]["uniqueId"];
+        $creatorid = $shipEntity["sc"]["creatoreId"];
+        $ship = new Ship($uniqueid, $name, $creatorid);
+
+        return $ship;
     }
 } 
