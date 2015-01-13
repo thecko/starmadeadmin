@@ -2,7 +2,7 @@ Starmade\APIBundle\Model\ShipCollection:
   exclusion_policy: ALL
   xml_root_name: ships
   properties:
-    blueprints:
+    ships:
       expose: true
       type: array<Starmade\APIBundle\Model\Ship>
       xml_list:
@@ -20,7 +20,7 @@ Starmade\APIBundle\Model\ShipCollection:
     -
       rel: self
       href:
-        route: get_ship
+        route: get_ships
         absolute: true
     -
       rel: ship
