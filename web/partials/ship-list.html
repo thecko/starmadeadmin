@@ -15,8 +15,8 @@
       <!--Body content-->
 
       <ul class="ships">
-        <li ng-repeat="ship in ships| filter:query | orderBy:orderProp" class="thumbnail ship-listing">
-          <a href="#/ships/{{ship.uniqueId}}">{{ship.realname}}</a>
+        <li ng-repeat="ship in ships.ships| filter:query | orderBy:orderProp" class="thumbnail ship-listing">
+          <a href="#/ships/{{ship.uniqueid}}">{{ship.name}}</a>
         </li>
       </ul>
 

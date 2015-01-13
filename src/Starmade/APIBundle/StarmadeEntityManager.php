@@ -4,9 +4,8 @@ namespace Starmade\APIBundle;
 
 use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 use Starmade\APIBundle\Resources\SMDecoder;
-use Starmade\APIBundle\Model\Ship;
 
-abstract class EntityManager {
+abstract class StarmadeEntityManager {
 
     /** @var array data */
     protected $data = array();
@@ -63,15 +62,20 @@ abstract class EntityManager {
     }
 
     protected function parseGameData() {
+        // Change the max execution time to allow program parse the huge quantity of files
+        $originalExecTime = ini_get('max_execution_time');
+        set_time_limit ( 300 );
+        
         $smDecoder = new SMDecoder();
 
 //        $game_dir = $this->getContainer()->getParameter("starmade_dir");
         $game_dir = "/data/xavi/areagamer/starmade/server/starmade/StarMade";
-        $game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
+        //$game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
 
         $prefix = $this->getPrefix();
         //exec( "ls " . STARMADE_DIR . "/server-database/DATA/ENTITY_SHIP_*" , $shipFiles );
         $entityFiles = glob($game_dir . "/server-database/201412/" . $prefix . "*");
+        $entityFiles = glob($game_dir . "/db/201412/" . $prefix . "*");
         
         $data = array();
 
@@ -85,6 +89,9 @@ abstract class EntityManager {
             $entity = $this->createEntity($entityData);
             $data[$entity->uniqueid] = $entity;
         }
+        
+        // Restore the original max execution time
+        set_time_limit ( $originalExecTime );
 
         return $data;
     }

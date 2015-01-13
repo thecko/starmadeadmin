@@ -1,0 +1,25 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "Starmade - Planets" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'planets.list.headline'|trans({}, 'APIBundle') }}</h1>
+
+    <p>
+        {{ 'planets.offset'|trans({}, 'APIDemoBundle') }}: {{ data.offset ?: '-' }}, {{ 'planets.limit'|trans({}, 'APIBundle') }}: {{ data.limit }}
+    </p>
+
+    <ul id="planet-list">
+        {% for id, planet in data.planets %}
+        <li>
+            <a href="{{ path('get_planet', {'id': id}) }}">{{ planet }}</a>
+        </li>
+        {% else %}
+        <li>{{ 'planets.list.empty'|trans({}, 'APIBundle') }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% set code = code(_self) %}

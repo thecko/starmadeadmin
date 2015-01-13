@@ -1,0 +1,16 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "starmade - Space Stations" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">Space Station #{{ id }}</h1>
+
+    <p>{{ spacestation }}</p>
+    <p>
+        <a href="{{ path('get_spacestations') }}">{{ 'spacestations.list.link'|trans({}, 'APIDemoBundle') }}</a> <br>
+    </p>
+{% endblock %}
+
+{% set code = code(_self) %}

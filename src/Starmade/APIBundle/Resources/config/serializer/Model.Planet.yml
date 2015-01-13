@@ -1,0 +1,33 @@
+Starmade\APIBundle\Model\Planet:
+  exclusion_policy: ALL
+  xml_root_name: planet
+  properties:
+    uniqueid:
+        expose: true
+        type: string
+        groups: [standard, restapi]
+    factionid:
+        expose: true
+        type: int
+        groups: [standard, restapi]
+    secret:
+      expose: true
+      type: string
+      groups: [restapi]
+    version:
+      expose: true
+      type: string
+      until_version: 1.1
+    new_version:
+      expose: true
+      type: string
+      serialized_name: version
+      since_version: 1.1
+  relations:
+    -
+      rel: self
+      href:
+        route: get_planet
+        parameters:
+          id: expr(object.uniqueid)
+        absolute: true

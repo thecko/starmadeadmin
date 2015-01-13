@@ -1,0 +1,34 @@
+Starmade\APIBundle\Model\ShopCollection:
+  exclusion_policy: ALL
+  xml_root_name: shops
+  properties:
+    shops:
+      expose: true
+      type: array<Starmade\APIBundle\Model\Shop>
+      xml_list:
+        inline: true
+        entry_name: ship
+    offset:
+      expose: true
+      type: integer
+      xml_attribute: true
+    limit:
+      expose: true
+      type: integer
+      xml_attribute: true
+  relations:
+    -
+      rel: self
+      href:
+        route: get_shops
+        absolute: true
+    -
+      rel: shop
+      href:
+        route: get_shop
+        absolute: true
+        generator: templated_uri
+        parameters:
+          id: "{uniqueid}"
+      attributes:
+        templated: true

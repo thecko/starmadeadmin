@@ -1,0 +1,37 @@
+Starmade\APIBundle\Model\Shop:
+  exclusion_policy: ALL
+  xml_root_name: shop
+  properties:
+    uniqueid:
+        expose: true
+        type: string
+        groups: [standard, restapi]
+    name:
+      expose: true
+      type: string
+      groups: [standard, restapi]
+    authorid:
+      expose: true
+      type: string
+      groups: [standard, restapi]
+    secret:
+      expose: true
+      type: string
+      groups: [restapi]
+    version:
+      expose: true
+      type: string
+      until_version: 1.1
+    new_version:
+      expose: true
+      type: string
+      serialized_name: version
+      since_version: 1.1
+  relations:
+    -
+      rel: self
+      href:
+        route: get_shop
+        parameters:
+          id: expr(object.uniqueid)
+        absolute: true

@@ -13,5 +13,17 @@
             <argument type="service" id="security.secure_random" />
             <argument>%kernel.cache_dir%</argument>
         </service>
+        <service id="starmade.api.shops_manager" class="Starmade\APIBundle\ShopsManager" public="true">
+            <argument type="service" id="security.secure_random" />
+            <argument>%kernel.cache_dir%</argument>
+        </service>
+        <service id="starmade.api.planets_manager" class="Starmade\APIBundle\PlanetsManager" public="true">
+            <argument type="service" id="security.secure_random" />
+            <argument>%kernel.cache_dir%</argument>
+        </service>
+        <service id="starmade.api.spacestations_manager" class="Starmade\APIBundle\SpaceStationsManager" public="true">
+            <argument type="service" id="security.secure_random" />
+            <argument>%kernel.cache_dir%</argument>
+        </service>
     </services>
 </container>

@@ -9,3 +9,14 @@ _blueprints:
 _ships:
     resource: "@APIBundle/Controller/ShipsController.php"
     type:     rest
+
+_shops:
+    resource: "@APIBundle/Controller/ShopsController.php"
+    type:     rest
+    
+_planets:
+    resource: "@APIBundle/Controller/PlanetsController.php"
+    type:     rest
+_spacestations:
+    resource: "@APIBundle/Controller/SpaceStationsController.php"
+    type:     rest
