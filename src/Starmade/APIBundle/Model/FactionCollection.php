@@ -2,12 +2,12 @@
 
 namespace Starmade\APIBundle\Model;
 
-class SpaceStationCollection
+class FactionCollection
 {
     /**
-     * @var SpaceStation[]
+     * @var Faction[]
      */
-    public $spacestations;
+    public $factions;
 
     /**
      * @var integer
@@ -20,13 +20,13 @@ class SpaceStationCollection
     public $limit;
 
     /**
-     * @param Ship[]  $shops
+     * @param Faction[]  $factions
      * @param integer $offset
      * @param integer $limit
      */
-    public function __construct($shops = array(), $offset = null, $limit = null)
+    public function __construct($factions = array(), $offset = null, $limit = null)
     {
-        $this->spacestations = $shops;
+        $this->factions = $factions;
         $this->offset = $offset;
         $this->limit = $limit;
     }

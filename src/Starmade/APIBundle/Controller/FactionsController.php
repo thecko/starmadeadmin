@@ -2,8 +2,9 @@
 
 namespace Starmade\APIBundle\Controller;
 
-use Starmade\APIBundle\Model\SpaceStation;
-use Starmade\APIBundle\Model\SpaceStationCollection;
+//use Acme\DemoBundle\Form\NoteType;
+use Starmade\APIBundle\Model\Faction;
+use Starmade\APIBundle\Model\FactionCollection;
 
 use FOS\RestBundle\Util\Codes;
 
@@ -20,23 +21,23 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Rest controller for ingame space stations
+ * Rest controller for server factions
  *
  * @package Starmade\APIBundle\Controller
  * @author Theck <jumptard.theck@gmail.com>
  */
-class SpaceStationsController extends FOSRestController
+class FactionsController extends FOSRestController
 {
     /**
-     * return \Starmade\APIBundle\SpaceStationsManager
+     * return \Starmade\APIBundle\FactionsManager
      */
-    public function getSpaceStationsManager()
+    public function getFactionsManager()
     {
-        return $this->get('starmade.api.spacestations_manager');
+        return $this->get('starmade.api.factions_manager');
     }
 
     /**
-     * List all space stations.
+     * List all factions of the server
      *
      * @ApiDoc(
      *   resource = true,
@@ -45,8 +46,8 @@ class SpaceStationsController extends FOSRestController
      *   }
      * )
      *
-     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing space stations.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many space stations to return.")
+     * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing factions.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many factions to return.")
      *
      * @Annotations\View()
      *
@@ -55,45 +56,45 @@ class SpaceStationsController extends FOSRestController
      *
      * @return array
      */
-    public function getSpacestationsAction(Request $request, ParamFetcherInterface $paramFetcher)
+    public function getFactionsAction(Request $request, ParamFetcherInterface $paramFetcher)
     {
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $spaceStations = $this->getSpaceStationsManager()->fetch($start, $limit);
+        $factions = $this->getFactionsManager()->fetch($start, $limit);
         
-        return new SpaceStationCollection($spaceStations, $offset, $limit);
+        return new FactionCollection($factions, $offset, $limit);
     }
 
     /**
-     * Get a single space station.
+     * Get a single faction.
      *
      * @ApiDoc(
-     *   output = "Starmade\APIBundle\Model\SpaceStation",
+     *   output = "Starmade\APIBundle\Model\Faction",
      *   statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when the space station is not found"
+     *     404 = "Returned when the blueprint is not found"
      *   }
      * )
      *
-     * @Annotations\View(templateVar="spaceStation")
+     * @Annotations\View(templateVar="faction")
      *
      * @param Request $request the request object
-     * @param int     $id      the space station id
+     * @param int     $id      the faction id
      *
      * @return array
      *
-     * @throws NotFoundHttpException when space station not exist
+     * @throws NotFoundHttpException when faction not exist
      */
-    public function getSpacestationAction(Request $request, $id)
+    public function getFactionAction(Request $request, $id)
     {
-        $spaceStation = $this->getSpaceStationsManager()->get($id);
-        if (false === $spaceStation) {
-            throw $this->createNotFoundException("Space station does not exist.");
+        $faction = $this->getFactionsManager()->get($id);
+        if (false === $faction) {
+            throw $this->createNotFoundException("Faction does not exist.");
         }
 
-        $view = new View($spaceStation);
+        $view = new View($faction);
         $group = $this->container->get('security.context')->isGranted('ROLE_API') ? 'restapi' : 'standard';
         $view->getSerializationContext()->setGroups(array('Default', $group));
 

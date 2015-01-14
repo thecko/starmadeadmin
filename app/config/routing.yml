@@ -20,3 +20,6 @@ _planets:
 _spacestations:
     resource: "@APIBundle/Controller/SpaceStationsController.php"
     type:     rest
+_factions:
+    resource: "@APIBundle/Controller/FactionsController.php"
+    type:     rest

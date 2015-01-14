@@ -1,0 +1,25 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "Starmade - Factions" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'factions.list.headline'|trans({}, 'APIBundle') }}</h1>
+
+    <p>
+        {{ 'factions.offset'|trans({}, 'APIDemoBundle') }}: {{ data.offset ?: '-' }}, {{ 'factions.limit'|trans({}, 'APIBundle') }}: {{ data.limit }}
+    </p>
+
+    <ul id="note-list">
+        {% for id, factions in data.factions %}
+        <li>
+            <a href="{{ path('get_faction', {'id': id}) }}">{{ faction }}</a>
+        </li>
+        {% else %}
+        <li>{{ 'factions.list.empty'|trans({}, 'APIBundle') }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% set code = code(_self) %}

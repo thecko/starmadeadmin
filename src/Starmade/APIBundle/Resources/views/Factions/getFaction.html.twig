@@ -1,0 +1,16 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "starmade - Factions" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">Faction #{{ id }}</h1>
+
+    <p>{{ faction }}</p>
+    <p>
+        <a href="{{ path('get_factions') }}">{{ 'factions.list.link'|trans({}, 'APIDemoBundle') }}</a> <br>
+    </p>
+{% endblock %}
+
+{% set code = code(_self) %}
