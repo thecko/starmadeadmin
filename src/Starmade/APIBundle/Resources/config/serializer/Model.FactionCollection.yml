@@ -1,7 +1,7 @@
 Starmade\APIBundle\Model\FactionCollection:
   exclusion_policy: ALL
   xml_root_name: factions
-  factions:
+  properties:
     factions:
       expose: true
       type: array<Starmade\APIBundle\Model\Faction>
