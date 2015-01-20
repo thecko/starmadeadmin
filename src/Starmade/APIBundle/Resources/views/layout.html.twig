@@ -5,13 +5,13 @@
     <link rel="stylesheet" href="{{ asset('bundles/acmedemo/css/demo.css') }}" />
 {% endblock %}
 
-{% block title 'Demo Bundle' %}
+{% block title 'APIBundle' %}
 
 {% block body %}
     {% block content_header %}
         <ul id="menu">
             {% block content_header_more %}
-                <li><a href="{{ path('_demo') }}">Demo Home</a></li>
+                <li><a href="{{ path('_factions') }}">Factions</a></li>
             {% endblock %}
         </ul>
 
@@ -22,7 +22,7 @@
         {% block content %}{% endblock %}
 
         <p>
-            <a href="{{ path('nelmio_api_doc_index') }}">{{ 'api.doc.link'|trans({}, 'AcmeDemoBundle') }}</a>
+            <a href="{{ path('nelmio_api_doc_index') }}">{{ 'api.doc.link'|trans({}, 'APIBundle') }}</a>
         </p>
     </div>
 

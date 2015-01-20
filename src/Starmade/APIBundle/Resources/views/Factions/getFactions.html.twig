@@ -8,13 +8,13 @@
     <h1 class="title">{{ 'factions.list.headline'|trans({}, 'APIBundle') }}</h1>
 
     <p>
-        {{ 'factions.offset'|trans({}, 'APIDemoBundle') }}: {{ data.offset ?: '-' }}, {{ 'factions.limit'|trans({}, 'APIBundle') }}: {{ data.limit }}
+        {{ 'factions.offset'|trans({}, 'APIBundle') }}: {{ data.offset ?: '-' }}, {{ 'factions.limit'|trans({}, 'APIBundle') }}: {{ data.limit }}
     </p>
 
     <ul id="note-list">
-        {% for id, factions in data.factions %}
+        {% for faction in data.factions %}
         <li>
-            <a href="{{ path('get_faction', {'id': id}) }}">{{ faction }}</a>
+            <a href="{{ path('get_faction', {'id': faction.uniqueid}) }}">{{ faction }}</a>
         </li>
         {% else %}
         <li>{{ 'factions.list.empty'|trans({}, 'APIBundle') }}</li>

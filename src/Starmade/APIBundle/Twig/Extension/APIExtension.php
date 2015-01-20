@@ -4,7 +4,7 @@ namespace Starmade\APIBundle\Twig\Extension;
 
 use CG\Core\ClassUtils;
 
-class DemoExtension extends \Twig_Extension
+class APIExtension extends \Twig_Extension
 {
     protected $loader;
     protected $controller;

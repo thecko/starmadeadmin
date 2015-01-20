@@ -5,6 +5,16 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="twig.extension.starmade.api" class="Starmade\APIBundle\Twig\Extension\APIExtension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="twig.loader" />
+        </service>
+
+        <service id="starmade.api.listener" class="Starmade\APIBundle\EventListener\ControllerListener">
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <argument type="service" id="twig.extension.starmade.api" />
+        </service>
+        
         <service id="starmade.api.blueprints_manager" class="Starmade\APIBundle\BlueprintsManager" public="true">
             <argument type="service" id="security.secure_random" />
             <argument>%kernel.cache_dir%</argument>

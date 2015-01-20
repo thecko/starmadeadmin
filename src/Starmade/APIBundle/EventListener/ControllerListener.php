@@ -10,7 +10,7 @@ class ControllerListener
 {
     protected $extension;
 
-    public function __construct(DemoExtension $extension)
+    public function __construct(APIExtension $extension)
     {
         $this->extension = $extension;
     }
