@@ -1,0 +1,16 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "starmade - Servers" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">Server #{{ id }}</h1>
+
+    <p>{{ server }}</p>
+    <p>
+        <a href="{{ path('get_servers') }}">{{ 'servers.list.link'|trans({}, 'APIBundle') }}</a> <br>
+    </p>
+{% endblock %}
+
+{% set code = code(_self) %}

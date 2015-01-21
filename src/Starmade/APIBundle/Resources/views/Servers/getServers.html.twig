@@ -1,0 +1,25 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "Starmade - Servers" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'servers.list.headline'|trans({}, 'APIBundle') }}</h1>
+
+    <p>
+        {{ 'servers.offset'|trans({}, 'APIBundle') }}: {{ data.offset ?: '-' }}, {{ 'servers.limit'|trans({}, 'APIBundle') }}: {{ data.limit }}
+    </p>
+
+    <ul id="server-list">
+        {% for server in data.servers %}
+        <li>
+            <a href="{{ path('get_server', {'id': server.uniqueid}) }}">{{ server }}</a>
+        </li>
+        {% else %}
+        <li>{{ 'servers.list.empty'|trans({}, 'APIBundle') }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% set code = code(_self) %}

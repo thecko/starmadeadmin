@@ -39,5 +39,10 @@
             <argument type="service" id="security.secure_random" />
             <argument>%kernel.cache_dir%</argument>
         </service>
+        
+        <service id="starmade.api.servers_manager" class="Starmade\APIBundle\ServerManager" public="true">
+            <argument type="service" id="security.secure_random" />
+            <argument>%kernel.cache_dir%</argument>
+        </service>
     </services>
 </container>

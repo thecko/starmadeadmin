@@ -1,0 +1,57 @@
+Starmade\APIBundle\Model\Server:
+  exclusion_policy: ALL
+  xml_root_name: server
+  properties:
+    uniqueid:
+        expose: true
+        type: string
+        groups: [standard, restapi]
+    name:
+      expose: true
+      type: string
+      groups: [standard, restapi]
+    description:
+      expose: true
+      type: string
+      groups: [standard, restapi]
+    online:
+      expose: true
+      type: bool
+      groups: [standard, restapi]
+    timestamp:
+      expose: true
+      type: datetime
+      groups: [standard, restapi]
+    startTime:
+      expose: true
+      type: datetime
+      groups: [standard, restapi]
+    connected:
+      expose: true
+      type: int
+      groups: [standard, restapi]
+    maxPlayers:
+      expose: true
+      type: int
+      groups: [standard, restapi]
+    secret:
+      expose: true
+      type: string
+      groups: [restapi]
+    version:
+      expose: true
+      type: string
+      until_version: 1.1
+    new_version:
+      expose: true
+      type: string
+      serialized_name: version
+      since_version: 1.1
+  relations:
+    -
+      rel: self
+      href:
+        route: get_faction
+        parameters:
+          id: expr(object.uniqueid)
+        absolute: true
