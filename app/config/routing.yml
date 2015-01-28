@@ -23,3 +23,9 @@ _spacestations:
 _factions:
     resource: "@APIBundle/Controller/FactionsController.php"
     type:     rest
+_servers:
+    resource: "@APIBundle/Controller/ServersController.php"
+    type:     rest
+_players:
+    resource: "@APIBundle/Controller/PlayersController.php"
+    type:     rest

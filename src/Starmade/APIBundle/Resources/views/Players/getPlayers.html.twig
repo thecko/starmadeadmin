@@ -1,0 +1,25 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "Starmade - Players" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'players.list.headline'|trans({}, 'APIBundle') }}</h1>
+
+    <p>
+        {{ 'players.offset'|trans({}, 'APIBundle') }}: {{ data.offset ?: '-' }}, {{ 'players.limit'|trans({}, 'APIBundle') }}: {{ data.limit }}
+    </p>
+
+    <ul id="players-list">
+        {% for id, player in data.players %}
+        <li>
+            <a href="{{ path('get_player', {'id': id}) }}">{{ player }}</a>
+        </li>
+        {% else %}
+        <li>{{ 'players.list.empty'|trans({}, 'APIBundle') }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% set code = code(_self) %}

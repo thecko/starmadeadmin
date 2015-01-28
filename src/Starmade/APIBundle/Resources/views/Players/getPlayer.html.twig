@@ -1,0 +1,16 @@
+{% extends "APIBundle::layout.html.twig" %}
+
+{% block title "starmade - Players" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">Player #{{ id }}</h1>
+
+    <p>{{ player }}</p>
+    <p>
+        <a href="{{ path('get_players') }}">{{ 'players.list.link'|trans({}, 'APIBundle') }}</a> <br>
+    </p>
+{% endblock %}
+
+{% set code = code(_self) %}
