@@ -1,0 +1,29 @@
+Starmade\APIBundle\Model\Playerconnection:
+  exclusion_policy: ALL
+  xml_root_name: playerconnection
+  properties:
+    playername:
+        expose: true
+        type: string
+        groups: [standard, restapi]
+    stamp:
+      expose: true
+      type: DateTime
+      groups: [standard, restapi]
+    ip:
+      expose: true
+      type: string
+      groups: [standard, restapi]
+    secret:
+      expose: true
+      type: string
+      groups: [restapi]
+    version:
+      expose: true
+      type: string
+      until_version: 1.1
+    new_version:
+      expose: true
+      type: string
+      serialized_name: version
+      since_version: 1.1

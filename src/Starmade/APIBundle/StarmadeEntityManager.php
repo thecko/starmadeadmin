@@ -72,7 +72,7 @@ abstract class StarmadeEntityManager {
 
 //        $game_dir = $this->getContainer()->getParameter("starmade_dir");
         $game_dir = "/data/xavi/areagamer/starmade/server/starmade/StarMade";
-        $game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
+        //$game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
 
         $prefix = $this->getPrefix();
         //exec( "ls " . STARMADE_DIR . "/server-database/DATA/ENTITY_SHIP_*" , $shipFiles );
