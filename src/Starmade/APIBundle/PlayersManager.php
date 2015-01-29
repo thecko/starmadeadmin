@@ -4,6 +4,7 @@ namespace Starmade\APIBundle;
 
 use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 use Starmade\APIBundle\Resources\SMDecoder;
+use Starmade\APIBundle\Model\Sector;
 use Starmade\APIBundle\Model\Player;
 use Starmade\APIBundle\StarmadeEntityManager;
 
@@ -15,21 +16,37 @@ class PlayersManager extends StarmadeEntityManager {
     }
 
     protected function getPrefix() {
-        return "ENTITY_PLAYER_";
+        return "ENTITY_PLAYERCHARACTER_";
     }
 
-    protected function createEntity($playerEntity) {
-        echo "<pre>";
-        print_r( $playerEntity );
-        echo "</pre>";
-        die();
-        $uniqueId = $playerEntity["ShopSpaceStation2"]["sc"]["uniqueId"];
-        $name = $playerEntity["ShopSpaceStation2"]["sc"]["realname"];
-        $creatorId = $playerEntity["ShopSpaceStation2"]["sc"]["creatoreId"];
+    protected function createEntity($playerEntity,$file=null) {
+        $uniqueId = $playerEntity["PlayerCharacter"]["id"];
+        $name = substr( $file , strpos( $file , "ENTITY_PLAYERCHARACTER_") + strlen("ENTITY_PLAYERCHARACTER_") );    
+        $name = str_replace(".ent", "", $name);
+        $credits = 0;
+        $sector = null;
 
-        $shop = new Shop( $uniqueId, $name, $creatorId );
+        // Look for the corresponding player state file
+        $stateFile = str_replace( "ENTITY_PLAYERCHARACTER" , "ENTITY_PLAYERSTATE", $file);
+        if (file_exists($stateFile)) {
+            $charStateEntity = $this->decoder->decodeSMFile($stateFile);
+            $credits = intval($charStateEntity["PlayerState"]["credits"]);
+            $sectorX = $charStateEntity["PlayerState"]["sector"]["x"];
+            $sectorY = $charStateEntity["PlayerState"]["sector"]["y"];
+            $sectorZ = $charStateEntity["PlayerState"]["sector"]["z"];
+            $sector = new Sector( $sectorX , $sectorY , $sectorZ );
+            $faction = $charStateEntity["PlayerState"]["pFac-v0"]["0"];
+        }
+        $player = new Player($uniqueId, $name, $credits,$sector,$faction);
+        
+        if($name == "Theck"){
+            echo "<pre>";
+            print_r($charStateEntity);
+            echo "</pre>";
+        }
 
-        return $shop;
+
+        return $player;
     }
 
 }

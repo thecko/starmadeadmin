@@ -1,0 +1,16 @@
+Starmade\APIBundle\Model\Sector:
+  exclusion_policy: ALL
+  xml_root_name: sector
+  properties:
+    x:
+        expose: true
+        type: int
+        groups: [standard, restapi]
+    y:
+        expose: true
+        type: int
+        groups: [standard, restapi]
+    z:
+        expose: true
+        type: int
+        groups: [standard, restapi]

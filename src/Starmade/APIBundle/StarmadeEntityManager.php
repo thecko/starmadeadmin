@@ -29,6 +29,8 @@ abstract class StarmadeEntityManager {
      * @var string
      */
     protected $file;
+    
+    protected $decoder;
 
     public function __construct(SecureRandomInterface $randomGenerator, $cacheDir) {
         $this->randomGenerator = $randomGenerator;
@@ -84,9 +86,9 @@ abstract class StarmadeEntityManager {
         }
 
         foreach ($entityFiles as $count => $entityFile) {
-            $decoder = new SMDecoder();    
-            $entityData = $decoder->decodeSMFile($entityFile);
-            $entity = $this->createEntity($entityData);
+            $this->decoder = new SMDecoder();
+            $entityData = $this->decoder->decodeSMFile($entityFile);
+            $entity = $this->createEntity($entityData,$entityFile);
             $data[$entity->uniqueid] = $entity;
         }
         
@@ -104,7 +106,7 @@ abstract class StarmadeEntityManager {
     /**
      * Constructs the object
      */
-    protected abstract function createEntity($file);
+    protected abstract function createEntity($entity,$file=null);
 
 
 } 

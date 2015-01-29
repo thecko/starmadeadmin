@@ -4,6 +4,7 @@ namespace Starmade\APIBundle\Controller;
 
 use Starmade\APIBundle\Model\Player;
 use Starmade\APIBundle\Model\PlayerCollection;
+use Starmade\APIBundle\Model\Sector;
 
 use FOS\RestBundle\Util\Codes;
 
