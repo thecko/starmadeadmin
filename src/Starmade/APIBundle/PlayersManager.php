@@ -53,11 +53,11 @@ class PlayersManager extends StarmadeEntityManager {
         }
         $player = new Player( $uniqueId, $name, $credits,$sector,$faction , $connHistory );
         
-        if($name == "Theck"){
-            echo "<pre>";
-            print_r($charStateEntity);
-            echo "</pre>";
-        }
+//        if($name == "Theck"){
+//            echo "<pre>";
+//            print_r($charStateEntity);
+//            echo "</pre>";
+//        }
 
 
         return $player;

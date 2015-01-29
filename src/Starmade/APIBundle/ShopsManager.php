@@ -18,12 +18,12 @@ class ShopsManager extends StarmadeEntityManager {
         return "ENTITY_SHOP_";
     }
 
-    protected function createEntity($shopEntity) {
+    protected function createEntity($shopEntity, $file = null) {
         $uniqueId = $shopEntity["ShopSpaceStation2"]["sc"]["uniqueId"];
         $name = $shopEntity["ShopSpaceStation2"]["sc"]["realname"];
         $creatorId = $shopEntity["ShopSpaceStation2"]["sc"]["creatoreId"];
 
-        $shop = new Shop( $uniqueId, $name, $creatorId );
+        $shop = new Shop($uniqueId, $name, $creatorId);
 
         return $shop;
     }

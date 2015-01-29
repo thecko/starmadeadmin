@@ -8,10 +8,16 @@ class SpaceStation {
     $uniqueid
     , $name
     , $creatorid
+    , $power
+    , $shields
+    , $faction
     ) {
         $this->uniqueid = $uniqueid;
         $this->name = $name;
         $this->creatorid = $creatorid;
+        $this->power = $power;
+        $this->shields = $shields;
+        $this->faction = $faction;
     }
 
     /**
@@ -25,14 +31,29 @@ class SpaceStation {
     public $secret;
 
     /**
-     * @var string The ship name
+     * @var string The space station's name
      */
     public $name;
 
     /**
-     * @var string The ship creator id
+     * @var string The space station creator id
      */
     public $creatorid;
+    
+    /**
+     * @var integer The Space station power
+     */
+    public $power;
+    
+    /**
+     * @var integer The Space station's shield capacity
+     */
+    public $shields;
+    
+    /**
+     * @var integer The Space station's faction owner
+     */
+    public $faction;
 
     /**
      * @var string The original version

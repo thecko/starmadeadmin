@@ -18,7 +18,7 @@ class PlanetsManager extends StarmadeEntityManager {
         return "ENTITY_PLANET_";
     }
 
-    protected function createEntity($planetEntity) {
+    protected function createEntity($planetEntity , $file = null) {
       
 //      echo "<pre>";
 //      print_r( $planetEntity );

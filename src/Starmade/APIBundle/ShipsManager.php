@@ -18,7 +18,7 @@ class ShipsManager extends StarmadeEntityManager {
         return "ENTITY_SHIP_";
     }
 
-    protected function createEntity($shipEntity) {
+    protected function createEntity($shipEntity , $file = null) {
         $name = $shipEntity["sc"]["realname"];
         $uniqueid = $shipEntity["sc"]["uniqueId"];
         $creatorid = $shipEntity["sc"]["creatoreId"];

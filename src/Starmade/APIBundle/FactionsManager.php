@@ -37,7 +37,7 @@ class FactionsManager extends StarmadeEntityManager {
     return $data;
   }
 
-  protected function createEntity($rawFaction) {
+  protected function createEntity($rawFaction , $file = null) {
     $uniqueid = $rawFaction["id"];
     $name = $rawFaction[1];
     $description = $rawFaction[2];

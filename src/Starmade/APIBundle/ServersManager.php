@@ -17,9 +17,8 @@ class FactionsManager extends StarmadeEntityManager {
   protected function parseGameData() {
     $smDecoder = new SMDecoder();
 
-//        $game_dir = $this->getContainer()->getParameter("starmade_dir");
-    $game_dir = "/data/xavi/areagamer/starmade/server/starmade/StarMade";
-    $game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
+    $game_dir = $this->getGameDir();
+    
     $rawServer = $smDecoder->checkServ('localhost',4242);
 
 //        echo "<pre>";

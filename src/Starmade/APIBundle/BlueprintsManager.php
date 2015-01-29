@@ -18,11 +18,8 @@ class BlueprintsManager extends StarmadeEntityManager {
     $smDecoder = new SMDecoder();
 
 //        $game_dir = $this->getContainer()->getParameter("starmade_dir");
-    $game_dir = "/data/xavi/areagamer/starmade/server/starmade/StarMade";
+    $game_dir = $this->getGameDir();
     $blueprints = $smDecoder->decodeSMFile($game_dir . "/server-database/201412/CATALOG.cat");
-//        echo "<pre>";
-//        print_r( $catalog);
-//        echo "</pre>";
 
     $data = array();
 
@@ -34,7 +31,7 @@ class BlueprintsManager extends StarmadeEntityManager {
     return $data;
   }
 
-  protected function createEntity($rawBlueprint) {
+  protected function createEntity($rawBlueprint , $file=null) {
     /*
       [0] => AF-011 Wasp It4  // Blueprint name
       [1] => FrankRa          // Author
