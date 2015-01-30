@@ -25,12 +25,6 @@ class SpaceStationsManager extends StarmadeEntityManager {
         $power = $spacestationEntity["SpaceStation"]["container"]["pw"];
         $shields = $spacestationEntity["SpaceStation"]["container"]["sh"];
         $faction = $spacestationEntity["SpaceStation"]["sc"]["fid"];
-        if (strpos($file, "Atlantis")) {
-            echo "<pre>";
-            print_r($spacestationEntity);
-            echo "</pre>";
-            die();
-        }
 
         $spaceStation = new SpaceStation($uniqueId, $name, $creatorId, $power, $shields, $faction);
 

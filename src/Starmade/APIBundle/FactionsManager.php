@@ -5,6 +5,7 @@ namespace Starmade\APIBundle;
 use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 use Starmade\APIBundle\Resources\SMDecoder;
 use Starmade\APIBundle\Model\Faction;
+use Starmade\APIBundle\Model\FactionMember;
 use Starmade\APIBundle\StarmadeEntityManager;
 
 class FactionsManager extends StarmadeEntityManager {
@@ -42,6 +43,20 @@ class FactionsManager extends StarmadeEntityManager {
     $name = $rawFaction[1];
     $description = $rawFaction[2];
     $home = $rawFaction["home"];
+    
+    // Process members
+    $members = array();
+    if( is_array( $rawFaction["mem"]) && is_array( $rawFaction["mem"][0]) ) {
+        foreach( $rawFaction["mem"][0] as $rawMember ){
+            $memberName = $rawMember[0];
+            $memberRank = $rawMember[1];
+            $memberLastConnection = $rawMember[2];
+            
+            $member = new FactionMember( $memberName , $memberRank , $memberLastConnection , $uniqueid );
+            
+            array_push($members, $member);
+        }
+    }
 
     // Other fields
     // 0 - Hash?
@@ -62,7 +77,15 @@ class FactionsManager extends StarmadeEntityManager {
             , $name
             , $description
             , $home
+            , $members
     );
+    
+    if (strpos($name, "Night") !== false) {
+        echo "<pre>";
+        print_r($rawFaction);
+        echo "</pre>";
+        die();
+    }
     
     return $faction;
   }

@@ -9,11 +9,12 @@ class Faction {
     , $name
     , $description
     , $home
+    , $members
     ) {
         $this->uniqueid = $uniqueid;
         $this->name = $name;
         $this->description = $description;
-        $this->home = $home;
+        $this->members = $members;
     }
 
     /**
@@ -40,6 +41,11 @@ class Faction {
      * @var string The faction's home
      */
     public $home;
+    
+    /**
+     * @var FactionMember[] The faction's members
+     */
+    public $members;
 
     /**
      * @var string The original version
