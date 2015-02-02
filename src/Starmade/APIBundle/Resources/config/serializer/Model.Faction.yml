@@ -18,6 +18,14 @@ Starmade\APIBundle\Model\Faction:
       expose: true
       type: string
       groups: [standard, restapi]
+    members:
+      expose: true
+      type: array
+      groups: [standard, restapi]
+    ranks:
+      expose: true
+      type: array
+      groups: [standard, restapi]
     secret:
       expose: true
       type: string

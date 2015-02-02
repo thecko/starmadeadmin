@@ -18,11 +18,21 @@ class ShipsManager extends StarmadeEntityManager {
         return "ENTITY_SHIP_";
     }
 
-    protected function createEntity($shipEntity , $file = null) {
+    protected function createEntity($shipEntity, $file = null) {
         $name = $shipEntity["sc"]["realname"];
         $uniqueid = $shipEntity["sc"]["uniqueId"];
         $creatorid = $shipEntity["sc"]["creatoreId"];
-        $ship = new Ship($uniqueid, $name, $creatorid);
+        $mass = $shipEntity["sc"]["mass"];
+        
+        if (strpos($name, "NZS") !== false) {
+            echo "<pre>";
+            print_r($shipEntity);
+            echo "</pre>";
+            die();
+        }
+
+
+        $ship = new Ship($uniqueid, $name, $creatorid , $mass);
 
         return $ship;
     }

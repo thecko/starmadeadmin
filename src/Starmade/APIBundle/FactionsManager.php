@@ -6,6 +6,7 @@ use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 use Starmade\APIBundle\Resources\SMDecoder;
 use Starmade\APIBundle\Model\Faction;
 use Starmade\APIBundle\Model\FactionMember;
+use Starmade\APIBundle\Model\FactionRank;
 use Starmade\APIBundle\StarmadeEntityManager;
 
 class FactionsManager extends StarmadeEntityManager {
@@ -50,12 +51,20 @@ class FactionsManager extends StarmadeEntityManager {
         foreach( $rawFaction["mem"][0] as $rawMember ){
             $memberName = $rawMember[0];
             $memberRank = $rawMember[1];
-            $memberLastConnection = $rawMember[2];
+            $memberLastConnection = round($rawMember[2]/1000);
             
             $member = new FactionMember( $memberName , $memberRank , $memberLastConnection , $uniqueid );
             
             array_push($members, $member);
         }
+    }
+    
+    // Faction ranks
+    $ranks = array();
+    $rawRanks = $rawFaction["used_0"][0][2];
+    foreach( $rawRanks as $rankId => $rankName ){
+        $rank = new FactionRank( $rankId , $rankName );
+        array_push( $ranks , $rank );
     }
 
     // Other fields
@@ -78,14 +87,15 @@ class FactionsManager extends StarmadeEntityManager {
             , $description
             , $home
             , $members
+            , $ranks
     );
     
-    if (strpos($name, "Night") !== false) {
-        echo "<pre>";
-        print_r($rawFaction);
-        echo "</pre>";
-        die();
-    }
+//    if (strpos($name, "Night") !== false) {
+//        echo "<pre>";
+//        print_r($rawFaction);
+//        echo "</pre>";
+//        //die();
+//    }
     
     return $faction;
   }

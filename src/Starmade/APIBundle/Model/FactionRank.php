@@ -2,44 +2,31 @@
 
 namespace Starmade\APIBundle\Model;
 
-class Ship {
+class FactionRank {
 
     public function __construct(
-    $uniqueid
+    $id
     , $name
-    , $creatorid
-    , $mass
     ) {
-        $this->uniqueid = $uniqueid;
+        $this->id = $id;
         $this->name = $name;
-        $this->creatorid = $creatorid;
-        $this->mass = $mass;
     }
 
-    /**
-     * @var int
-     */
-    public $uniqueid;
 
     /**
-     * @var string
-     */
-    public $secret;
-
-    /**
-     * @var string The ship name
+     * @var string The faction's rank name
      */
     public $name;
 
     /**
-     * @var string The ship creator id
+     * @var int The faction rank id
      */
-    public $creatorid;
+    public $id;
     
     /**
-     * @var double The ship's mass
+     * @var string
      */
-    public $mass;
+    public $secret;
 
     /**
      * @var string The original version
@@ -52,7 +39,7 @@ class Ship {
     public $new_version = 1.1;
     
     /**
-     * String representation for a ship
+     * String representation for a faction member
      *
      * @return string
      */

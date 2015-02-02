@@ -6,8 +6,12 @@ class Planet {
 
     public function __construct(
     $uniqueid
+    , $faction
+    , $sector
     ) {
         $this->uniqueid = $uniqueid;
+        $this->faction = $faction;
+        $this->sector = $sector;
     }
 
     /**
@@ -18,7 +22,12 @@ class Planet {
     /**
      * @var int
      */
-    public $factionid;
+    public $faction;
+    
+    /**
+     * @var Sector
+     */
+    public $sector;
 
     /**
      * @var string
