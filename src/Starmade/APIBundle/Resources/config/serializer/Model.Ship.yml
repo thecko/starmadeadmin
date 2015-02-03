@@ -16,15 +16,15 @@ Starmade\APIBundle\Model\Ship:
       groups: [standard, restapi]
     mass:
       expose: true
-      type: string
+      type: float
       groups: [standard, restapi]
     power:
       expose: true
-      type: int
+      type: integer
       groups: [standard, restapi]
     shields:
       expose: true
-      type: int
+      type: integer
       groups: [standard, restapi]
     sector:
       expose: true

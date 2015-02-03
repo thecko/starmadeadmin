@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js"></script>    
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-resource.min.js"></script>    
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-animate.min.js"></script>    
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>    
+    <script src="js/angular-resource.min.js"></script>    
+    <script src="js/angular-animate.min.js"></script>    
     <script src="js/app.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
@@ -17,8 +17,8 @@
     <title>Star-Made.es Server Admin panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">    
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
   </head>
   <body>    
     <div class="jumbotron">
@@ -30,8 +30,8 @@
       <div ng-view></div>      
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="js/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
