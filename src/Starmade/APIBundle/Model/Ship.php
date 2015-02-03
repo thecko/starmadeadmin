@@ -9,11 +9,19 @@ class Ship {
     , $name
     , $creatorid
     , $mass
+    , $power
+    , $shields
+    , $sector
+    , $aIConfig
     ) {
         $this->uniqueid = $uniqueid;
         $this->name = $name;
         $this->creatorid = $creatorid;
         $this->mass = $mass;
+        $this->power = $power;
+        $this->shields = $shields;
+        $this->sector = $sector;
+        $this->aIConfig = $aIConfig;
     }
 
     /**
@@ -40,6 +48,26 @@ class Ship {
      * @var double The ship's mass
      */
     public $mass;
+    
+    /**
+     * @var integer The ship's power capacity
+     */
+    public $power;
+    
+    /**
+     * @var integer The ship's shield capacity
+     */
+    public $shields;
+    
+    /**
+     * @var Sector The ship's current sector
+     */
+    public $sector;
+    
+    /**
+     * @var AIConfig The ship's AI config
+     */
+    public $aIConfig;
 
     /**
      * @var string The original version

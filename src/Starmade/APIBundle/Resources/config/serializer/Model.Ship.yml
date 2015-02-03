@@ -10,9 +10,29 @@ Starmade\APIBundle\Model\Ship:
       expose: true
       type: string
       groups: [standard, restapi]
-    authorid:
+    creatorid:
       expose: true
       type: string
+      groups: [standard, restapi]
+    mass:
+      expose: true
+      type: string
+      groups: [standard, restapi]
+    power:
+      expose: true
+      type: int
+      groups: [standard, restapi]
+    shields:
+      expose: true
+      type: int
+      groups: [standard, restapi]
+    sector:
+      expose: true
+      type: array
+      groups: [standard, restapi]
+    aiconfig:
+      expose: true
+      type: array
       groups: [standard, restapi]
     secret:
       expose: true
