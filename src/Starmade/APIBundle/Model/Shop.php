@@ -8,10 +8,12 @@ class Shop {
     $uniqueid
     , $name
     , $creatorid
+    , $sector
     ) {
         $this->uniqueid = $uniqueid;
         $this->name = $name;
         $this->creatorid = $creatorid;
+        $this->sector = $sector;
     }
 
     /**
@@ -33,6 +35,11 @@ class Shop {
      * @var string The ship creator id
      */
     public $creatorid;
+    
+    /**
+     * @var Sector the shop's position
+     */
+    public $sector;
 
     /**
      * @var string The original version

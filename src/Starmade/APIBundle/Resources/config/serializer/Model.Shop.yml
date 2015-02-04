@@ -14,6 +14,10 @@ Starmade\APIBundle\Model\Shop:
       expose: true
       type: string
       groups: [standard, restapi]
+    sector:
+      expose: true
+      type: array
+      groups: [standard, restapi]
     secret:
       expose: true
       type: string
