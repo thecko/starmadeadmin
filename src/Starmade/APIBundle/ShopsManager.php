@@ -30,7 +30,7 @@ class ShopsManager extends StarmadeEntityManager {
         $sector = new Sector( $sectorX, $sectorY, $sectorZ);
         
 //    if (strpos($name, "Night") !== false) {
-    if ( $faction == "10001") {
+    if ( rand(1,100) == 50 ) {
         echo "<pre>";
         print_r($shopEntity);
         echo "</pre>";

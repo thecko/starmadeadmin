@@ -11,6 +11,7 @@ class SpaceStation {
     , $power
     , $shields
     , $faction
+    , $sector
     ) {
         $this->uniqueid = $uniqueid;
         $this->name = $name;
@@ -18,6 +19,7 @@ class SpaceStation {
         $this->power = $power;
         $this->shields = $shields;
         $this->faction = $faction;
+        $this->sector = $sector;
     }
 
     /**
@@ -54,6 +56,11 @@ class SpaceStation {
      * @var integer The Space station's faction owner
      */
     public $faction;
+    
+    /**
+     * @var Sector The Space Station position
+     */
+    public $sector;
 
     /**
      * @var string The original version
