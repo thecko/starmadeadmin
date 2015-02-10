@@ -36,7 +36,7 @@ class ShipsManager extends StarmadeEntityManager {
         $aIActive = $shipEntity["sc"]["container"]["AIConfig1"][1][1] === "true";
         $aIConfig = new AIConfig($aIType, $aITarget, $aIActive);
 
-        if (strpos($name, "NZS") !== false) {
+        if (strpos($name, "test-ship") !== false) {
             echo "<pre>";
             print_r($shipEntity);
             echo "</pre>";

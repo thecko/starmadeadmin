@@ -65,6 +65,8 @@ abstract class StarmadeEntityManager {
         // Change the max execution time to allow program parse the huge quantity of files
         $originalExecTime = ini_get('max_execution_time');
         set_time_limit(300);
+        ini_set('memory_limit','512M');
+
 
         $smDecoder = new SMDecoder();
 
