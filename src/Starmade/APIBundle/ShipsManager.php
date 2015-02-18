@@ -36,12 +36,18 @@ class ShipsManager extends StarmadeEntityManager {
         $aIActive = $shipEntity["sc"]["container"]["AIConfig1"][1][1] === "true";
         $aIConfig = new AIConfig($aIType, $aITarget, $aIActive);
 
-        if (strpos($name, "NZS") !== false) {
-            echo "<pre>";
-            print_r($shipEntity);
-            echo "</pre>";
+//        if (strpos($name, "test-ship") !== false) {
+//            echo "<pre>";
+//            print_r($shipEntity);
+//            echo "</pre>";
+//            $extraDataFile = str_replace("/server-database/201412/" , "/server-database/201412/DATA/" , $file);
+//            $extraDataFile = str_replace(".ent" , ".0.0.0.smd2" , $extraDataFile );
+//            $extraData = $this->decoder->decodeSMFile( $extraDataFile );
+//            echo "<hr /><pre>";
+//            print_r($extraData);
+//            echo "</pre>";
 //            die();
-        }
+//        }
 
 
         $ship = new Ship($uniqueid, $name, $creatorid, $mass, $power, $shields, $sector, $aIConfig);
