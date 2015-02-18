@@ -2,7 +2,7 @@ var starMadeAdminControllers = angular.module('starMadeAdminControllers', []);
 
 starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api',
   function ($scope, Api) {
-    $scope.ships = Api.query( { resourceName : 'ships' } );
+    $scope.ships = Api.query( { resourceName : 'ships' , limit : 1000 } );
     $scope.orderProp = 'name';
   }]);
 
