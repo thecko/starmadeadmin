@@ -7,3 +7,5 @@
 /composer.phar
 /apachelogs/
 /nbproject/private/
+/web/kibana/
+/web/kibana3/
