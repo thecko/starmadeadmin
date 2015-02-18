@@ -8,18 +8,16 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        api_key_user_provider:
+            id: api_key_user_provider
         in_memory:
             memory:
                 users:
                     restapi:  { password: secretpw, roles: [ 'ROLE_API' ] }
 
     firewalls:
-        dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
+        secured_area:
             pattern: ^/
-            stateless:  true
-            http_basic:
-                realm: "Demo REST API (username: restapi, password: secretpw)"
+            stateless: true
+            simple_preauth:
+                authenticator: apikey_authenticator

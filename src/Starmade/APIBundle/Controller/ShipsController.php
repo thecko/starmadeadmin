@@ -60,7 +60,7 @@ class ShipsController extends FOSRestController
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
-
+        
         $ships = $this->getShipsManager()->fetch($start, $limit);
         
         return new ShipCollection($ships, $offset, $limit);

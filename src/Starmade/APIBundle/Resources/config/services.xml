@@ -15,6 +15,9 @@
             <argument type="service" id="twig.extension.starmade.api" />
         </service>
         
+        <service id="api_key_user_provider" class="Starmade\APIBundle\Security\ApiKeyUserProvider" >
+        </service>
+        
         <service id="starmade.api.blueprints_manager" class="Starmade\APIBundle\BlueprintsManager" public="true">
             <argument type="service" id="security.secure_random" />
             <argument>%kernel.cache_dir%</argument>

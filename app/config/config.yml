@@ -108,3 +108,7 @@ fos_http_cache:
                     cache_control: { public: true, max_age: 15, s_maxage: 30 }
                     last_modified: "-1 hour"
                     vary: [Accept-Encoding, Accept-Language]
+services:
+  apikey_authenticator:
+        class:     Starmade\APIBundle\Security\ApiKeyAuthenticator
+        arguments: ["@api_key_user_provider"]
