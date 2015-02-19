@@ -16,6 +16,10 @@ Starmade\APIBundle\Model\ShipCollection:
       expose: true
       type: integer
       xml_attribute: true
+    total:
+      expose: true
+      type: integer
+      xml_attribute: true
   relations:
     -
       rel: self

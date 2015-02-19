@@ -2,8 +2,8 @@
 
 namespace Starmade\APIBundle\Model;
 
-class ShipCollection
-{
+class ShipCollection {
+
     /**
      * @var Ship[]
      */
@@ -20,14 +20,20 @@ class ShipCollection
     public $limit;
 
     /**
+     * @var integer
+     */
+    public $total;
+
+    /**
      * @param Ship[]  $ships
      * @param integer $offset
      * @param integer $limit
      */
-    public function __construct($ships = array(), $offset = null, $limit = null)
-    {
+    public function __construct($ships = array(), $offset = null, $limit = null, $total = null) {
         $this->ships = $ships;
         $this->offset = $offset;
         $this->limit = $limit;
+        $this->total = $total;
     }
+
 }

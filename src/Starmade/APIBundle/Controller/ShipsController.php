@@ -62,8 +62,9 @@ class ShipsController extends FOSRestController
         $limit = $paramFetcher->get('limit');
         
         $ships = $this->getShipsManager()->fetch($start, $limit);
+        $count = $this->getShipsManager()->count();
         
-        return new ShipCollection($ships, $offset, $limit);
+        return new ShipCollection($ships, $offset, $limit,$count);
     }
 
     /**

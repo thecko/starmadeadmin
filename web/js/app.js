@@ -3,6 +3,7 @@ var starMadeAdminApp = angular.module('starMadeAdminApp', [
   , 'starMadeAdminAnimations'
   , 'starMadeAdminControllers'
   , 'starMadeAdminServices'
+  , 'ui.bootstrap'
 ]);
 
 starMadeAdminApp.config(['$routeProvider',

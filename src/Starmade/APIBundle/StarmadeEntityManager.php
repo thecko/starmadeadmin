@@ -60,6 +60,10 @@ abstract class StarmadeEntityManager {
 
         return $this->data[$id];
     }
+    
+    public function count(){
+        return count( $this->data );
+    }
 
     protected function parseGameData() {
         // Change the max execution time to allow program parse the huge quantity of files

@@ -19,6 +19,9 @@
           <a href="#/ships/{{ship.uniqueid}}">{{ship.name}}</a>
         </li>
       </ul>
+      
+    <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+
 
     </div>
   </div>
