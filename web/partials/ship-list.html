@@ -1,28 +1,28 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-2">
-      <!--Sidebar content-->
+    <div class="row">
+        <div class="col-md-2">
+            <!--Sidebar content-->
 
-      Search: <input ng-model="query">
-      Sort by:
-      <select ng-model="orderProp">
-        <option value="name">Alphabetical</option>
-        <option value="id">Id</option>
-      </select>
+            Search: <input ng-model="query">
+            Sort by:
+            <select ng-model="orderProp">
+                <option value="name">Alphabetical</option>
+                <option value="id">Id</option>
+            </select>
 
+        </div>
+        <div class="col-md-10">
+            <!--Body content-->
+
+            <ul class="ships">
+                <li ng-repeat="ship in ships.ships| filter:query | orderBy:orderProp" class="thumbnail ship-listing">
+                    <a href="#/ships/{{ship.uniqueid}}">{{ship.name}}</a>
+                </li>
+            </ul>
+
+            <pagination total-items="totalItems" items-per-page="itemsPerPage" max-size="10" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+
+
+        </div>
     </div>
-    <div class="col-md-10">
-      <!--Body content-->
-
-      <ul class="ships">
-        <li ng-repeat="ship in ships.ships| filter:query | orderBy:orderProp" class="thumbnail ship-listing">
-          <a href="#/ships/{{ship.uniqueid}}">{{ship.name}}</a>
-        </li>
-      </ul>
-      
-    <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
-
-
-    </div>
-  </div>
 </div>

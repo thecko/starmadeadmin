@@ -3,7 +3,7 @@ var starMadeAdminServices = angular.module('starMadeAdminServices', ['ngResource
 starMadeAdminServices.factory('Api', ['$resource',
   function($resource){
     return $resource(
-        '/app_dev.php/:resourceName/:entityId\.json?apikey=asdasdasd&limit=:limit'
+        '/app_dev.php/:resourceName/:entityId\.json?apikey=asdasdasd&limit=:limit&offset=:offset'
         , {}
         , {
             query: {
@@ -12,6 +12,7 @@ starMadeAdminServices.factory('Api', ['$resource',
                 resourceName :''
                 ,entityId:''
                 ,limit:100
+                ,offset:0
               }
               , isArray:false 
             }

@@ -2,20 +2,23 @@ var starMadeAdminControllers = angular.module('starMadeAdminControllers', []);
 
 starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api',
     function ($scope, Api) {
-        $scope.ships = Api.query({resourceName: 'ships', limit: 10});
+        $scope.maxSize = 5;
+        $scope.itemsPerPage = 5;
+        $scope.currentPage = 1;
+        $scope.offset = 0;
         $scope.orderProp = 'name';
 
-        $scope.totalItems = $scope.ships.total;
-        $scope.currentPage = 1;
-
-        $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-        };
 
         $scope.pageChanged = function () {
+            $scope.offset = ($scope.currentPage-1) * $scope.itemsPerPage;
+            $scope.ships = Api.query({resourceName: 'ships', limit: $scope.itemsPerPage, offset: $scope.offset});
         };
+        Api.query({resourceName: 'ships', limit: $scope.itemsPerPage, offset: $scope.offset})
+        .then( function(data){
+            $scope.ships = data;
+            $scope.totalItems = $scope.ships.total;
+        });
 
-        $scope.maxSize = 5;
     }]);
 
 starMadeAdminControllers.controller('ShipDetailCtrl', ['$scope', '$routeParams', 'Api',
