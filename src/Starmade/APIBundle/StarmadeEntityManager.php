@@ -4,6 +4,7 @@ namespace Starmade\APIBundle;
 
 use Symfony\Component\Security\Core\Util\SecureRandomInterface;
 use Starmade\APIBundle\Resources\SMDecoder;
+use Elasticsearch\Client;
 
 abstract class StarmadeEntityManager {
 
@@ -30,12 +31,15 @@ abstract class StarmadeEntityManager {
      */
     protected $file;
     protected $decoder;
+    protected $client;
 
     public function __construct(SecureRandomInterface $randomGenerator, $cacheDir) {
         $this->randomGenerator = $randomGenerator;
         $this->cacheDir = $cacheDir;
         $this->file = '/sm_' . $this->type . '_data';
+        $this->client = new Client();
 
+        $this->client->indices()->exists(array());
         if (file_exists($cacheDir . $this->file)) {
             $data = file_get_contents($cacheDir . $this->file);
             $this->data = unserialize($data);
@@ -46,7 +50,15 @@ abstract class StarmadeEntityManager {
     }
 
     private function flush() {
-        file_put_contents($this->cacheDir . $this->file, serialize($this->data));
+        foreach( $this->data as $element ){
+            $tmp = array(
+                "body" => $element,
+                "index" => "starmade-gamedata",
+                "type" => $this->type,
+                "id" => $element->uniqueid,
+            );
+            $this->client->index( $tmp );
+        }
     }
 
     public function fetch($start = 0, $limit = 5) {
