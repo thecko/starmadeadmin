@@ -749,16 +749,16 @@
         },
         {
             "name": "friendsofsymfony/http-cache-bundle",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle.git",
-                "reference": "baf182399fdd15b2c934ac74044ea5f7f5f3bb54"
+                "reference": "89c09ec37eab20dd784423b5ede10a3b3e3dbdc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/baf182399fdd15b2c934ac74044ea5f7f5f3bb54",
-                "reference": "baf182399fdd15b2c934ac74044ea5f7f5f3bb54",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCacheBundle/zipball/89c09ec37eab20dd784423b5ede10a3b3e3dbdc2",
+                "reference": "89c09ec37eab20dd784423b5ede10a3b3e3dbdc2",
                 "shasum": ""
             },
             "require": {
@@ -822,7 +822,7 @@
                 "purge",
                 "varnish"
             ],
-            "time": "2015-01-18 18:29:33"
+            "time": "2015-02-20 15:34:57"
         },
         {
             "name": "friendsofsymfony/rest-bundle",

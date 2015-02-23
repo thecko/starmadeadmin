@@ -1,20 +1,17 @@
 <?php
 
-namespace Starmade\APIBundle;
+namespace Starmade\APIBundle\Entity;
 
-use Symfony\Component\Security\Core\Util\SecureRandomInterface;
-use Starmade\APIBundle\Resources\SMDecoder;
-use Elasticsearch\Client;
+use Starmade\APIBundle\Entity\StarmadeEntityRepository;
 
-abstract class StarmadeEntityManager {
-
+/**
+ * A cache file based StarmadeEntityRepository implementation
+ *
+ * @author Theck <jumptard.theck@gmail.com>
+ */
+abstract class StarmadeFileEntityRepository extends StarmadeEntityRepository {
     /** @var array data */
     protected $data = array();
-
-    /**
-     * @var \Symfony\Component\Security\Core\Util\SecureRandomInterface
-     */
-    protected $randomGenerator;
 
     /**
      * @var string
@@ -24,34 +21,43 @@ abstract class StarmadeEntityManager {
     /**
      * @var string
      */
-    protected $type;
-
-    /**
-     * @var string
-     */
     protected $file;
+    
+    /**
+     * @var \Starmade\Resources\SMDecoder
+     */
     protected $decoder;
-    protected $client;
-
-    public function __construct(SecureRandomInterface $randomGenerator, $cacheDir) {
-        $this->randomGenerator = $randomGenerator;
+    
+    public function __construct( $cacheDir ) {
         $this->cacheDir = $cacheDir;
         $this->file = '/sm_' . $this->type . '_data';
-        $this->client = new Client();
-
-        $this->client->indices()->exists(array(
-            "index" => "starmade-gamedata"
-        ));
+        
         if (file_exists($cacheDir . $this->file)) {
             $data = file_get_contents($cacheDir . $this->file);
             $this->data = unserialize($data);
         } else {
             $this->data = $this->parseGameData();
             $this->flush();
-        }
+        };
     }
+    
+    public function findAll(){
+        return $this->data;
+    }
+    
+    public function findById($id) {
+        if (!isset($this->data[$id])) {
+            return false;
+        }
 
-    private function flush() {
+        return $this->data[$id];
+    }
+    
+    public function fetch($start = 0, $limit = 5) {
+        return array_values(array_slice($this->data, $start, $limit, true));
+    }
+    
+    protected function flush() {
         foreach( $this->data as $element ){
             $tmp = array(
                 "body" => $element,
@@ -61,18 +67,6 @@ abstract class StarmadeEntityManager {
             );
             $this->client->index( $tmp );
         }
-    }
-
-    public function fetch($start = 0, $limit = 5) {
-        return array_values(array_slice($this->data, $start, $limit, true));
-    }
-
-    public function get($id) {
-        if (!isset($this->data[$id])) {
-            return false;
-        }
-
-        return $this->data[$id];
     }
     
     public function count(){
@@ -114,22 +108,14 @@ abstract class StarmadeEntityManager {
         return $data;
     }
 
-    /**
-     * The entity file will start with this prefix
-     */
     protected abstract function getPrefix();
 
-    /**
-     * Constructs the object
-     */
-    protected abstract function createEntity($entity, $file = null);
+    public function regenerate() {
+        unlink( $this->cacheDir . "/" . $this->file );
+    }
 
-    public function getGameDir() {
-//        $game_dir = $this->getContainer()->getParameter("starmade_dir");
-        $game_dir = "/data/xavi/areagamer/starmade/server/starmade/StarMade";
-        $game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
-
-        return $game_dir;
+    protected function createEntity($entity, $file = null) {
+        
     }
 
 }
