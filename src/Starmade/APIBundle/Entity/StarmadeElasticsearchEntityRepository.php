@@ -3,6 +3,7 @@
 namespace Starmade\APIBundle\Entity;
 
 use Starmade\APIBundle\Entity\StarmadeEntityRepository;
+use Elasticsearch\Client;
 
 /**
  * An elastic search based StarmadeEntityRepository implementation
@@ -10,6 +11,16 @@ use Starmade\APIBundle\Entity\StarmadeEntityRepository;
  * @author Theck <jumptard.theck@gmail.com>
  */
 abstract class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
+
+    public $client;
+    public $index;
+
+    public function __construct() {
+        $parent::__construct();
+
+        $this->client = new Client();
+        $this->index = "starmade-gamedata";
+    }
 
     public function findAll() {
         
@@ -20,19 +31,41 @@ abstract class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepos
     }
 
     public function regenerate() {
-        
+        $indexExists = $this->client->indices()->exists(array(
+            "index" => $this->index,
+        ));
+
+        if ($indexExists) {
+            $this->client->indices()->delete(array(
+                "index" => $this->index,
+            ));
+        }
+
+        $this->parseGameData();
+
+        $this->flush();
     }
-    
-    protected function flush(){
-        foreach( $this->data as $element ){
+
+    protected function flush() {
+        foreach ($this->data as $element) {
             $tmp = array(
                 "body" => $element,
-                "index" => "starmade-gamedata",
-                "type" => $this->type,
+                "index" => $this->index,
+                "type" => $this->getType(),
                 "id" => $element->uniqueid,
             );
-            $this->client->index( $tmp );
+            $this->client->index($tmp);
         }
+    }
+
+    public function persists($element) {
+        $tmp = array(
+            "body" => $element,
+            "index" => "starmade-gamedata",
+            "type" => $this->type,
+            "id" => $element->uniqueid,
+        );
+        $this->client->index($tmp);
     }
 
 }

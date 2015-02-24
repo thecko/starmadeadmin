@@ -73,49 +73,18 @@ abstract class StarmadeFileEntityRepository extends StarmadeEntityRepository {
         return count( $this->data );
     }
 
-    protected function parseGameData() {
-        // Change the max execution time to allow program parse the huge quantity of files
-        $originalExecTime = ini_get('max_execution_time');
-        set_time_limit(300);
-        ini_set('memory_limit','512M');
-
-
-        $smDecoder = new SMDecoder();
-
-        $game_dir = $this->getGameDir();
-
-        $prefix = $this->getPrefix();
-        //exec( "ls " . STARMADE_DIR . "/server-database/DATA/ENTITY_SHIP_*" , $shipFiles );
-        $entityFiles = glob($game_dir . "/server-database/201412/" . $prefix . "*");
-        //$entityFiles = glob($game_dir . "/db/201412/" . $prefix . "*");
-
-        $data = array();
-
-        if (!$entityFiles) {
-            return $data;
-        }
-
-        foreach ($entityFiles as $count => $entityFile) {
-            $this->decoder = new SMDecoder();
-            $entityData = $this->decoder->decodeSMFile($entityFile);
-            $entity = $this->createEntity($entityData, $entityFile);
-            $data[$entity->uniqueid] = $entity;
-        }
-
-        // Restore the original max execution time
-        set_time_limit($originalExecTime);
-
-        return $data;
-    }
-
-    protected abstract function getPrefix();
-
     public function regenerate() {
         unlink( $this->cacheDir . "/" . $this->file );
-    }
-
-    protected function createEntity($entity, $file = null) {
         
+        $this->data = array();
+        
+        $this->parseGameData();
+        
+        $this->flush();
+    }
+    
+    public function persists() {
+        $this->data[$entity->uniqueid] = $entity;;
     }
 
 }

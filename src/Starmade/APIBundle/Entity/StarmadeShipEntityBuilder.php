@@ -3,6 +3,10 @@
 namespace Starmade\APIBundle\Entity;
 
 use Starmade\APIBundle\Entity\StarmadeEntityBuilder;
+use Starmade\APIBundle\Model\Ship;
+use Starmade\APIBundle\Model\Sector;
+use Starmade\APIBundle\Model\AIConfig;
+
 
 /**
  * Implementation of StarmadeEntityBuilder for ships
@@ -12,19 +16,19 @@ use Starmade\APIBundle\Entity\StarmadeEntityBuilder;
 class StarmadeShipEntityBuilder extends StarmadeEntityBuilder {
 
   public static function build($entity, $file = null) {
-    $name = $shipEntity["sc"]["realname"];
-    $uniqueid = $shipEntity["sc"]["uniqueId"];
-    $creatorid = $shipEntity["sc"]["creatoreId"];
-    $mass = $shipEntity["sc"]["transformable"]["mass"];
-    $power = $shipEntity["sc"]["container"]["pw"];
-    $shields = $shipEntity["sc"]["container"]["sh"];
-    $sectorX = $shipEntity["sc"]["transformable"]["sPos"]["x"];
-    $sectorY = $shipEntity["sc"]["transformable"]["sPos"]["y"];
-    $sectorZ = $shipEntity["sc"]["transformable"]["sPos"]["z"];
+    $name = $entity["sc"]["realname"];
+    $uniqueid = $entity["sc"]["uniqueId"];
+    $creatorid = $entity["sc"]["creatoreId"];
+    $mass = $entity["sc"]["transformable"]["mass"];
+    $power = $entity["sc"]["container"]["pw"];
+    $shields = $entity["sc"]["container"]["sh"];
+    $sectorX = $entity["sc"]["transformable"]["sPos"]["x"];
+    $sectorY = $entity["sc"]["transformable"]["sPos"]["y"];
+    $sectorZ = $entity["sc"]["transformable"]["sPos"]["z"];
     $sector = new Sector($sectorX, $sectorY, $sectorZ);
-    $aIType = $shipEntity["sc"]["container"]["AIConfig1"][0][1];
-    $aITarget = $shipEntity["sc"]["container"]["AIConfig1"][2][1];
-    $aIActive = $shipEntity["sc"]["container"]["AIConfig1"][1][1] === "true";
+    $aIType = $entity["sc"]["container"]["AIConfig1"][0][1];
+    $aITarget = $entity["sc"]["container"]["AIConfig1"][2][1];
+    $aIActive = $entity["sc"]["container"]["AIConfig1"][1][1] === "true";
     $aIConfig = new AIConfig($aIType, $aITarget, $aIActive);
 
 //        if (strpos($name, "test-ship") !== false) {
@@ -45,5 +49,13 @@ class StarmadeShipEntityBuilder extends StarmadeEntityBuilder {
 
     return $ship;
   }
+
+    public static function getPrefix() {
+        return "ENTITY_SHIP_";
+    }
+    
+    public static function getType() {
+        return "ship";
+    }
 
 }
