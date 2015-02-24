@@ -15,7 +15,7 @@ use Starmade\APIBundle\Model\AIConfig;
  */
 class StarmadeShipEntityBuilder extends StarmadeEntityBuilder {
 
-  public static function build($entity, $file = null) {
+  public function build($entity, $file = null) {
     $name = $entity["sc"]["realname"];
     $uniqueid = $entity["sc"]["uniqueId"];
     $creatorid = $entity["sc"]["creatoreId"];
@@ -50,11 +50,11 @@ class StarmadeShipEntityBuilder extends StarmadeEntityBuilder {
     return $ship;
   }
 
-    public static function getPrefix() {
+    public function getPrefix() {
         return "ENTITY_SHIP_";
     }
     
-    public static function getType() {
+    public function getType() {
         return "ship";
     }
 

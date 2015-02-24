@@ -10,13 +10,13 @@ use Elasticsearch\Client;
  *
  * @author Theck <jumptard.theck@gmail.com>
  */
-abstract class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
+class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
 
     public $client;
     public $index;
 
-    public function __construct() {
-        $parent::__construct();
+    public function __construct( StarmadeEntityBuilder $builder ) {
+        parent::__construct( $builder );
 
         $this->client = new Client();
         $this->index = "starmade-gamedata";
@@ -42,21 +42,10 @@ abstract class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepos
         }
 
         $this->parseGameData();
-
-        $this->flush();
+        
     }
 
-    protected function flush() {
-        foreach ($this->data as $element) {
-            $tmp = array(
-                "body" => $element,
-                "index" => $this->index,
-                "type" => $this->getType(),
-                "id" => $element->uniqueid,
-            );
-            $this->client->index($tmp);
-        }
-    }
+    protected function flush() {}
 
     public function persists($element) {
         $tmp = array(
@@ -67,5 +56,9 @@ abstract class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepos
         );
         $this->client->index($tmp);
     }
+
+  public function count() {
+    
+  }
 
 }
