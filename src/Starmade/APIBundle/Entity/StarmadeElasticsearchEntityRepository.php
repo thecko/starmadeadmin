@@ -50,15 +50,15 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
     public function persists($element) {
         $tmp = array(
             "body" => $element,
-            "index" => "starmade-gamedata",
-            "type" => $this->type,
+            "index" => $this->index,
+            "type" => $this->getType(),
             "id" => $element->uniqueid,
         );
         $this->client->index($tmp);
     }
 
   public function count() {
-    
+    $this->client->indexes( array( 'index' => $this->index ) )->count();
   }
 
 }

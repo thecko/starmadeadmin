@@ -2,6 +2,7 @@
 
 namespace Starmade\APIBundle\Entity;
 
+use Starmade\APIBundle\Resources\SMDecoder;
 use Starmade\APIBundle\Entity\StarmadeEntityBuilder;
 
 /**
@@ -24,7 +25,7 @@ abstract class StarmadeEntityRepository {
     /**
      * Returns all the entities
      */
-    public abstract function findAll();
+    public abstract function findAll( $start=0 , $limit=10);
     
     /**
      * Returns a single item by it's uniqueid
@@ -44,7 +45,7 @@ abstract class StarmadeEntityRepository {
     /**
      * Persists the entity
      */
-    public abstract function persists();
+    public abstract function persists( $entity );
     
     /**
      * The game's entity file will start with this prefix
@@ -87,8 +88,7 @@ abstract class StarmadeEntityRepository {
         set_time_limit(300);
         ini_set('memory_limit','512M');
 
-
-        $smDecoder = new SMDecoder();
+        $this->decoder = new SMDecoder();
 
         $gameDir = $this->getGameDir();
         $gameWorld = $this->getGameWorld();
@@ -101,9 +101,8 @@ abstract class StarmadeEntityRepository {
         }
 
         foreach ($entityFiles as $count => $entityFile) {
-            $this->decoder = new SMDecoder();
             $entityData = $this->decoder->decodeSMFile($entityFile);
-            $entity = $builder->build( $entityData , $entityFile );
+            $entity = $this->builder->build( $entityData , $entityFile );
             $this->persists( $entity );
         }
 
