@@ -50,6 +50,15 @@ class StarmadeShipEntityBuilder extends StarmadeEntityBuilder {
         return $ship;
     }
 
+    public function reinstitute($data) {
+        extract($data);
+        $ship = new Ship(
+                $uniqueid, $name, $creatorid, $mass, $power, $shields, $sector, $aIConfig
+        );
+
+        return $ship;
+    }
+
     public function getPrefix() {
         return "ENTITY_SHIP_";
     }

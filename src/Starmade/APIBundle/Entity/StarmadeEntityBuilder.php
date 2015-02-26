@@ -15,6 +15,11 @@ abstract class StarmadeEntityBuilder {
   public abstract function build( $entity, $file = null );
   
   /**
+   * From a data array from a repository, re-create the model
+   */
+  public abstract function reinstitute( $data );
+  
+  /**
    * Returns the Starmade's file prefix name
    */
   public abstract function getPrefix();
@@ -23,4 +28,5 @@ abstract class StarmadeEntityBuilder {
    * Returns our internal name
    */
   public abstract function getType();
+  
 }

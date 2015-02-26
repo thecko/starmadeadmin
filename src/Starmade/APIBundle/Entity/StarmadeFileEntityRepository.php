@@ -61,7 +61,12 @@ class StarmadeFileEntityRepository extends StarmadeEntityRepository {
   }
 
   protected function flush() {
+    $originalMemLimit = ini_get('memory_limit');
+    ini_set('memory_limit','512M');
+    
     file_put_contents($this->cacheDir . $this->file, serialize($this->data));
+    
+    ini_set('memory_limit',$originalMemLimit);
   }
 
   public function count() {

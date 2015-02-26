@@ -6,6 +6,8 @@ use Starmade\APIBundle\Model\Ship;
 use Starmade\APIBundle\Model\ShipCollection;
 use Starmade\APIBundle\Entity\StarmadeShipEntityBuilder;
 use Starmade\APIBundle\Entity\StarmadeFileEntityRepository;
+use Starmade\APIBundle\Entity\StarmadeElasticsearchEntityRepository;
+
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -30,7 +32,7 @@ class ShipsController extends FOSRestController {
    */
   public function getShipsManager() {
     $builder = new StarmadeShipEntityBuilder();
-    $manager = new StarmadeFileEntityRepository($builder, $this->get('kernel')->getCacheDir());
+    $manager = new StarmadeElasticsearchEntityRepository($builder);
     
     return $manager;
   }

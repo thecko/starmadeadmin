@@ -20,10 +20,29 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
 
         $this->client = new Client();
         $this->index = "starmade-gamedata";
+        
+//        $this->regenerate();
+        
+        if ( !$this->indexExists() ) {
+            $this->parseGameData();
+        }
+        
     }
 
-    public function findAll() {
-        
+    public function findAll( $start = 0, $limit = 10 ) {
+        $data = $this->client->search( array(
+           "index" => $this->index,
+           "type" => $this->getType(),
+        ));
+        $results = array();
+        foreach( $data["hits"] as $data ){
+            $obj = $this->builder->reinstitute($data);
+        echo "<pre>";
+        print_r($obj);
+        echo "</pre>";
+            die();
+        }
+        return $data;
     }
 
     public function findById($uniqueid) {
@@ -31,11 +50,8 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
     }
 
     public function regenerate() {
-        $indexExists = $this->client->indices()->exists(array(
-            "index" => $this->index,
-        ));
 
-        if ($indexExists) {
+        if ( $this->indexExists() ) {
             $this->client->indices()->delete(array(
                 "index" => $this->index,
             ));
@@ -43,6 +59,12 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
 
         $this->parseGameData();
         
+    }
+    
+    public function indexExists(){
+        return $this->client->indices()->exists(array(
+            "index" => $this->index,
+        ));
     }
 
     protected function flush() {}
