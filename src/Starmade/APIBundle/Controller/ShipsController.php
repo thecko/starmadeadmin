@@ -89,7 +89,7 @@ class ShipsController extends FOSRestController {
    * @throws NotFoundHttpException when ship not exist
    */
   public function getShipAction(Request $request, $id) {
-    $ship = $this->getShipsManager()->get($id);
+    $ship = $this->getShipsManager()->findById($id);
     if (false === $ship) {
       throw $this->createNotFoundException("Ship does not exist.");
     }

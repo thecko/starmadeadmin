@@ -52,6 +52,7 @@ class StarmadeShipEntityBuilder extends StarmadeEntityBuilder {
 
     public function reinstitute($data) {
         extract($data);
+
         $ship = new Ship(
                 $uniqueid, $name, $creatorid, $mass, $power, $shields, $sector, $aIConfig
         );
