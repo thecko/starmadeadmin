@@ -2,7 +2,7 @@ Starmade\APIBundle\Model\SpaceStationCollection:
   exclusion_policy: ALL
   xml_root_name: spacestations
   properties:
-    spacestations:
+    data:
       expose: true
       type: array<Starmade\APIBundle\Model\SpaceStation>
       xml_list:

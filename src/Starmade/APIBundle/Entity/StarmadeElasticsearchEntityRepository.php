@@ -140,8 +140,8 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
     public function getOutDated(){
         // TODO as a parameter
         $outdated = new \Datetime();
-//        $outdated->modify('1 month ago');
-        $outdated->modify('1 minute ago');
+        $outdated->modify('1 month ago');
+//        $outdated->modify('1 minute ago');
         
         return $outdated;
     }

@@ -4,17 +4,17 @@ namespace Starmade\APIBundle\Controller;
 
 use Starmade\APIBundle\Model\Shop;
 use Starmade\APIBundle\Model\ShopCollection;
+use Starmade\APIBundle\Entity\StarmadeShopEntityBuilder;
+use Starmade\APIBundle\Entity\StarmadeElasticsearchEntityRepository;
 
 use FOS\RestBundle\Util\Codes;
-
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\RouteRedirectView;
-
 use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -25,14 +25,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @package Starmade\APIBundle\Controller
  * @author Theck <jumptard.theck@gmail.com>
  */
-class ShopsController extends FOSRestController
-{
+class ShopsController extends FOSRestController {
+
     /**
      * return \Starmade\APIBundle\BlueprintsManager
      */
-    public function getShopsManager()
-    {
-        return $this->get('starmade.api.shops_manager');
+    public function getShopsManager() {
+        $builder = new StarmadeShopEntityBuilder();
+        $manager = new StarmadeElasticsearchEntityRepository($builder);
+
+        return $manager;
     }
 
     /**
@@ -55,15 +57,15 @@ class ShopsController extends FOSRestController
      *
      * @return array
      */
-    public function getShopsAction(Request $request, ParamFetcherInterface $paramFetcher)
-    {
+    public function getShopsAction(Request $request, ParamFetcherInterface $paramFetcher) {
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $shops = $this->getShopsManager()->fetch($start, $limit);
-        
-        return new ShopCollection($shops, $offset, $limit);
+        $shops = $this->getShopsManager()->findAll($start, $limit);
+        $count = $this->getShopsManager()->count();
+
+        return new ShopCollection($shops, $offset, $limit,$count);
     }
 
     /**
@@ -86,8 +88,7 @@ class ShopsController extends FOSRestController
      *
      * @throws NotFoundHttpException when shop not exist
      */
-    public function getShopAction(Request $request, $id)
-    {
+    public function getShopAction(Request $request, $id) {
         $shop = $this->getShopsManager()->get($id);
         if (false === $shop) {
             throw $this->createNotFoundException("Shop does not exist.");
@@ -99,4 +100,5 @@ class ShopsController extends FOSRestController
 
         return $view;
     }
+
 }

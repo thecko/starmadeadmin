@@ -2,7 +2,7 @@ Starmade\APIBundle\Model\ShopCollection:
   exclusion_policy: ALL
   xml_root_name: shops
   properties:
-    shops:
+    data:
       expose: true
       type: array<Starmade\APIBundle\Model\Shop>
       xml_list:

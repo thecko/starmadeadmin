@@ -5,6 +5,8 @@ namespace Starmade\APIBundle\Controller;
 //use Acme\DemoBundle\Form\NoteType;
 use Starmade\APIBundle\Model\Blueprint;
 use Starmade\APIBundle\Model\BlueprintCollection;
+use Starmade\APIBundle\Entity\StarmadeBlueprintEntityBuilder;
+use Starmade\APIBundle\Entity\StarmadeElasticsearchEntityRepository;
 
 use FOS\RestBundle\Util\Codes;
 
@@ -33,7 +35,10 @@ class BlueprintsController extends FOSRestController
      */
     public function getBlueprintsManager()
     {
-        return $this->get('starmade.api.blueprints_manager');
+        $builder = new StarmadeBlueprintEntityBuilder();
+        $manager = new StarmadeElasticsearchEntityRepository($builder);
+    
+        return $manager;
     }
 
     /**
@@ -62,9 +67,10 @@ class BlueprintsController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $blueprints = $this->getBlueprintsManager()->fetch($start, $limit);
+        $blueprints = $this->getBlueprintsManager()->findAll($start, $limit);
+        $count = $this->getBlueprintsManager()->count();
         
-        return new BlueprintCollection($blueprints, $offset, $limit);
+        return new BlueprintCollection($blueprints, $offset, $limit,$count);
     }
 
     /**

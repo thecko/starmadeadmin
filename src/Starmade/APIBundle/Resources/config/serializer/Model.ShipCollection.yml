@@ -2,7 +2,7 @@ Starmade\APIBundle\Model\ShipCollection:
   exclusion_policy: ALL
   xml_root_name: ships
   properties:
-    ships:
+    data:
       expose: true
       type: array<Starmade\APIBundle\Model\Ship>
       xml_list:

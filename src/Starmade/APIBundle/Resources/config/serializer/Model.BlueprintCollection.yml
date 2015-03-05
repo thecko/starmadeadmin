@@ -2,7 +2,7 @@ Starmade\APIBundle\Model\BlueprintCollection:
   exclusion_policy: ALL
   xml_root_name: blueprints
   properties:
-    blueprints:
+    data:
       expose: true
       type: array<Starmade\APIBundle\Model\Blueprint>
       xml_list:

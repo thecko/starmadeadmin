@@ -4,6 +4,8 @@ namespace Starmade\APIBundle\Controller;
 
 use Starmade\APIBundle\Model\SpaceStation;
 use Starmade\APIBundle\Model\SpaceStationCollection;
+use Starmade\APIBundle\Entity\StarmadeSpaceStationEntityBuilder;
+use Starmade\APIBundle\Entity\StarmadeElasticsearchEntityRepository;
 
 use FOS\RestBundle\Util\Codes;
 
@@ -32,7 +34,10 @@ class SpaceStationsController extends FOSRestController
      */
     public function getSpaceStationsManager()
     {
-        return $this->get('starmade.api.spacestations_manager');
+        $builder = new StarmadeSpaceStationEntityBuilder();
+        $manager = new StarmadeElasticsearchEntityRepository($builder);
+
+        return $manager;
     }
 
     /**
@@ -62,8 +67,9 @@ class SpaceStationsController extends FOSRestController
         $limit = $paramFetcher->get('limit');
 
         $spaceStations = $this->getSpaceStationsManager()->fetch($start, $limit);
+        $count = $this->getShopsManager()->count();
         
-        return new SpaceStationCollection($spaceStations, $offset, $limit);
+        return new SpaceStationCollection($spaceStations, $offset, $limit,$count);
     }
 
     /**
