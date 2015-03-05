@@ -20,6 +20,8 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
 
         $this->client = new Client();
         $this->index = "starmade-gamedata";
+        
+        $this->regenerate();
 
         if ($this->needToRegenerate()) {
             $this->parseGameData();
@@ -42,44 +44,57 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
     }
 
     public function findById($uniqueid) {
-        try {
-            $data = $this->client->get(array(
-                "index" => $this->index,
-                "type" => $this->getType(),
-                "id" => $uniqueid,
-            ));
+        $obj = false;
+        $params = array();
+        $params["index"] = $this->index;
+        $params["type"] = $this->getType();
+        $params["id"] = $uniqueid;
+        if ($this->client->exists($params)) {
+            $data = $this->client->get($params);
             $obj = $this->builder->reinstitute($data["_source"]);
-        } catch (Exception $e) {
-            $obj = false;
         }
         return $obj;
     }
 
     public function regenerate() {
 
-        // TODO delete only the type data not the whole index
-
-        $this->client->indices()->delete(array(
-            "index" => $this->index,
-        ));
+        $params = array();
+        $params['index'] = $this->index;
+        $params['type'] = $this->getType();
+        $this->client->deleteByQuery($params);
+        die();
 
         $this->parseGameData();
     }
 
+    /**
+     * If there are elements outdated, we'll to regenerate the index
+     * @return boolean if regeneration is needed
+     */
     public function needToRegenerate() {
-        return false;
-        return $this->client->indices()->exists(array(
-                    "index" => $this->index,
-        ));
+        $needToRegenerate = false;
+        
+        $outdated = $this->getOutDated();
+
+        $params['index'] = $this->index;
+        $params['type'] = $this->getType();
+        $params['body']['query']['range']['timestamp']['lt'] = $outdated->getTimestamp();
+        $data = $this->client->search($params);
+        
+        if( $data["hits"]["total"] > 0 ){
+            $needToRegenerate = true;
+        }
+        
+        return $needToRegenerate;
     }
 
-    protected function flush() {
-        
-    }
+    protected function flush() {}
 
     public function persists($element) {
+        $body = (array)$element;
+        $body["timestamp"] = time();
         $tmp = array(
-            "body" => $element,
+            "body" => $body,
             "index" => $this->index,
             "type" => $this->getType(),
             "timestamp" => time(),
@@ -94,6 +109,15 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
             'type' => $this->getType(),
         ));
         return $count["count"];
+    }
+    
+    public function getOutDated(){
+        // TODO as a parameter
+        $outdated = new \Datetime();
+//        $outdated->modify('1 month ago');
+        $outdated->modify('1 minute ago');
+        
+        return $outdated;
     }
 
 }
