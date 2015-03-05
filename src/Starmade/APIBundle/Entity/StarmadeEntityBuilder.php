@@ -2,12 +2,20 @@
 
 namespace Starmade\APIBundle\Entity;
 
+use Starmade\APIBundle\Resources\SMDecoder;
+
 /**
  * Extract the data from a game file to a model
  *
  * @author Theck <jumptard.theck@gmail.com>
  */
 abstract class StarmadeEntityBuilder {
+  
+  protected $decoder;
+  
+  public function __construct() {
+    $this->decoder = new SMDecoder();
+  }
   
   /**
    * From the game file data fills the corresponding model
@@ -28,5 +36,18 @@ abstract class StarmadeEntityBuilder {
    * Returns our internal name
    */
   public abstract function getType();
+  
+  public function getEntities( $gameDir , $gameWorld ){
+      
+      $prefix = $this->getPrefix();
+        
+      $entities = glob($gameDir . "/server-database/" . $gameWorld . "/" . $prefix . "*");
+      
+      return $entities;
+    }
+    
+    public function decode( $file ){
+      return $this->decoder->decodeSMFile( $file );
+    }
   
 }

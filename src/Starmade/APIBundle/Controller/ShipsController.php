@@ -5,7 +5,6 @@ namespace Starmade\APIBundle\Controller;
 use Starmade\APIBundle\Model\Ship;
 use Starmade\APIBundle\Model\ShipCollection;
 use Starmade\APIBundle\Entity\StarmadeShipEntityBuilder;
-use Starmade\APIBundle\Entity\StarmadeFileEntityRepository;
 use Starmade\APIBundle\Entity\StarmadeElasticsearchEntityRepository;
 
 use FOS\RestBundle\Util\Codes;

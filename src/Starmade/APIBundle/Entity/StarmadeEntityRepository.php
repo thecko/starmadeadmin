@@ -2,7 +2,6 @@
 
 namespace Starmade\APIBundle\Entity;
 
-use Starmade\APIBundle\Resources\SMDecoder;
 use Starmade\APIBundle\Entity\StarmadeEntityBuilder;
 
 /**
@@ -67,8 +66,8 @@ abstract class StarmadeEntityRepository {
      */
     public function getGameDir() {
 //        $game_dir = $this->getContainer()->getParameter("starmade_dir");
-        $game_dir = "/data/xavi/areagamer/starmade/server/starmade/StarMade";
         $game_dir = "/home/theck/areagamer/starmade/server/starmade/StarMade";
+        $game_dir = "/data/xavi/areagamer/starmade/server/starmade/StarMade";
 
         return $game_dir;
     }
@@ -87,21 +86,15 @@ abstract class StarmadeEntityRepository {
         $originalMemLimit = ini_get('memory_limit');
         set_time_limit(300);
         ini_set('memory_limit','512M');
-
-        $this->decoder = new SMDecoder();
-
-        $gameDir = $this->getGameDir();
-        $gameWorld = $this->getGameWorld();
-
-        $prefix = $this->getPrefix();
-        $entityFiles = glob($gameDir . "/server-database/" . $gameWorld . "/" . $prefix . "*");
+        
+        $entityFiles = $this->builder->getEntities( $this->getGameDir() , $this->getGameWorld() );
 
         if (!$entityFiles) {
             return false;
         }
 
         foreach ($entityFiles as $count => $entityFile) {
-            $entityData = $this->decoder->decodeSMFile($entityFile);
+            $entityData = $this->builder->decode( $entityFile );
             $entity = $this->builder->build( $entityData , $entityFile );
             $this->persists( $entity );
         }
@@ -112,5 +105,4 @@ abstract class StarmadeEntityRepository {
 
         return true;
     }
-    
 }

@@ -21,7 +21,7 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
         $this->client = new Client();
         $this->index = "starmade-gamedata";
         
-        $this->regenerate();
+        //$this->regenerate();
 
         if ($this->needToRegenerate()) {
             $this->parseGameData();
@@ -61,6 +61,7 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
         $params = array();
         $params['index'] = $this->index;
         $params['type'] = $this->getType();
+        $params['body']['query']['must']['match_all'] = '';
         $this->client->deleteByQuery($params);
         die();
 
@@ -72,20 +73,45 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
      * @return boolean if regeneration is needed
      */
     public function needToRegenerate() {
-        $needToRegenerate = false;
         
+        // First look for the index
+        $indexExists = $this->client->indices()->exists(array(
+            "index" => $this->index,
+        ));
+        
+        if( !$indexExists ){
+          
+          $indexExists = $this->client->indices()->create(array(
+            "index" => $this->index,
+          ));
+          
+          return true;
+        }
+        
+        // Then, it maybe empty
+        $count = $this->client->count(array(
+            "index" => $this->index,
+            "type" => $this->getType(),
+        ));
+        if( $count["count"] == 0 ){
+          return true;
+        }
+        
+        
+        // Finaly, look if there is outdated entries
         $outdated = $this->getOutDated();
 
         $params['index'] = $this->index;
         $params['type'] = $this->getType();
         $params['body']['query']['range']['timestamp']['lt'] = $outdated->getTimestamp();
         $data = $this->client->search($params);
-        
+
         if( $data["hits"]["total"] > 0 ){
-            $needToRegenerate = true;
+            return true;
         }
         
-        return $needToRegenerate;
+        
+        return false;
     }
 
     protected function flush() {}

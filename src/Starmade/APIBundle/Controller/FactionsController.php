@@ -2,9 +2,10 @@
 
 namespace Starmade\APIBundle\Controller;
 
-//use Acme\DemoBundle\Form\NoteType;
 use Starmade\APIBundle\Model\Faction;
 use Starmade\APIBundle\Model\FactionCollection;
+use Starmade\APIBundle\Entity\StarmadeFactionEntityBuilder;
+use Starmade\APIBundle\Entity\StarmadeElasticsearchEntityRepository;
 
 use FOS\RestBundle\Util\Codes;
 
@@ -33,7 +34,10 @@ class FactionsController extends FOSRestController
      */
     public function getFactionsManager()
     {
-        return $this->get('starmade.api.factions_manager');
+        $builder = new StarmadeFactionEntityBuilder();
+        $manager = new StarmadeElasticsearchEntityRepository($builder);
+    
+        return $manager;
     }
 
     /**
@@ -62,9 +66,10 @@ class FactionsController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $factions = $this->getFactionsManager()->fetch($start, $limit);
+        $factions = $this->getFactionsManager()->findAll($start, $limit);
+        $count = $this->getFactionsManager()->count();
         
-        return new FactionCollection($factions, $offset, $limit);
+        return new FactionCollection($factions, $offset, $limit , $count);
     }
 
     /**
