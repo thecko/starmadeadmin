@@ -66,8 +66,8 @@ class SpaceStationsController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $spaceStations = $this->getSpaceStationsManager()->fetch($start, $limit);
-        $count = $this->getShopsManager()->count();
+        $spaceStations = $this->getSpaceStationsManager()->findAll($start, $limit);
+        $count = $this->getSpaceStationsManager()->count();
         
         return new SpaceStationCollection($spaceStations, $offset, $limit,$count);
     }

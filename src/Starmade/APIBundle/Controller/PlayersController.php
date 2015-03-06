@@ -4,7 +4,8 @@ namespace Starmade\APIBundle\Controller;
 
 use Starmade\APIBundle\Model\Player;
 use Starmade\APIBundle\Model\PlayerCollection;
-use Starmade\APIBundle\Model\Sector;
+use Starmade\APIBundle\Entity\StarmadePlayerEntityBuilder;
+use Starmade\APIBundle\Entity\StarmadeElasticsearchEntityRepository;
 
 use FOS\RestBundle\Util\Codes;
 
@@ -33,7 +34,10 @@ class PlayersController extends FOSRestController
      */
     public function getPlayersManager()
     {
-        return $this->get('starmade.api.players_manager');
+        $builder = new StarmadePlayerEntityBuilder();
+        $manager = new StarmadeElasticsearchEntityRepository($builder);
+    
+        return $manager;
     }
 
     /**
@@ -62,9 +66,10 @@ class PlayersController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $players = $this->getPlayersManager()->fetch($start, $limit);
+        $players = $this->getPlayersManager()->findAll($start, $limit);
+        $count = $this->getPlayersManager()->count();
         
-        return new PlayerCollection($players, $offset, $limit);
+        return new PlayerCollection($players, $offset, $limit,$count);
     }
 
     /**

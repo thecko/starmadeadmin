@@ -2,7 +2,7 @@ Starmade\APIBundle\Model\ServerCollection:
   exclusion_policy: ALL
   xml_root_name: servers
   properties:
-    servers:
+    data:
       expose: true
       type: array<Starmade\APIBundle\Model\Server>
       xml_list:

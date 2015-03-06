@@ -4,6 +4,8 @@ namespace Starmade\APIBundle\Controller;
 
 use Starmade\APIBundle\Model\Planet;
 use Starmade\APIBundle\Model\PlanetCollection;
+use Starmade\APIBundle\Entity\StarmadePlanetEntityBuilder;
+use Starmade\APIBundle\Entity\StarmadeElasticsearchEntityRepository;
 
 use FOS\RestBundle\Util\Codes;
 
@@ -32,7 +34,10 @@ class PlanetsController extends FOSRestController
      */
     public function getPlanetsManager()
     {
-        return $this->get('starmade.api.planets_manager');
+        $builder = new StarmadePlanetEntityBuilder();
+        $manager = new StarmadeElasticsearchEntityRepository($builder);
+    
+        return $manager;
     }
 
     /**
@@ -61,9 +66,10 @@ class PlanetsController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $planets = $this->getPlanetsManager()->fetch($start, $limit);
+        $planets = $this->getPlanetsManager()->findAll($start, $limit);
+        $count = $this->getPlanetsManager()->count();
         
-        return new PlanetCollection($planets, $offset, $limit);
+        return new PlanetCollection($planets, $offset, $limit,$count);
     }
 
     /**

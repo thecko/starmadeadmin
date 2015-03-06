@@ -1,27 +1,21 @@
 <?php
 
-namespace Starmade\APIBundle;
+namespace Starmade\APIBundle\Entity;
 
-use Symfony\Component\Security\Core\Util\SecureRandomInterface;
-use Starmade\APIBundle\Resources\SMDecoder;
-use Starmade\APIBundle\Model\Sector;
+use Starmade\APIBundle\Entity\StarmadeEntityBuilder;
 use Starmade\APIBundle\Model\Player;
+use Starmade\APIBundle\Model\Sector;
 use Starmade\APIBundle\Model\Playerconnection;
-use Starmade\APIBundle\StarmadeEntityManager;
 
-class PlayersManager extends StarmadeEntityManager {
+/**
+ * Implementation of StarmadeEntityBuilder for players
+ *
+ * @author Theck <jumptard.theck@gmail.com>
+ */
+class StarmadePlayerEntityBuilder extends StarmadeEntityBuilder {
 
-    public function __construct(SecureRandomInterface $randomGenerator, $cacheDir) {
-        $this->type = "player";
-        parent::__construct($randomGenerator, $cacheDir);
-    }
-
-    protected function getPrefix() {
-        return "ENTITY_PLAYERCHARACTER_";
-    }
-
-    protected function createEntity($playerEntity,$file=null) {
-        $uniqueId = $playerEntity["PlayerCharacter"]["id"];
+    public function build($entity, $file = null) {
+        $uniqueId = $entity["PlayerCharacter"]["id"];
         $name = substr( $file , strpos( $file , "ENTITY_PLAYERCHARACTER_") + strlen("ENTITY_PLAYERCHARACTER_") );    
         $name = str_replace(".ent", "", $name);
         $credits = 0;
@@ -61,6 +55,24 @@ class PlayersManager extends StarmadeEntityManager {
 
 
         return $player;
+    }
+
+    public function reinstitute($data) {
+        extract($data);
+
+        $entity = new Player( 
+            $uniqueid, $name, $credits,$sector,$faction , $connections
+        );
+
+        return $entity;
+    }
+
+    public function getPrefix() {
+        return "ENTITY_PLAYERCHARACTER_";
+    }
+
+    public function getType() {
+        return "player";
     }
 
 }

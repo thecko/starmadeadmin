@@ -2,7 +2,7 @@ Starmade\APIBundle\Model\PlanetCollection:
   exclusion_policy: ALL
   xml_root_name: planets
   properties:
-    planets:
+    data:
       expose: true
       type: array<Starmade\APIBundle\Model\Planet>
       xml_list:

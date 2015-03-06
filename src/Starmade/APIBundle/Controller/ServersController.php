@@ -5,6 +5,8 @@ namespace Starmade\APIBundle\Controller;
 //use Acme\DemoBundle\Form\NoteType;
 use Starmade\APIBundle\Model\Server;
 use Starmade\APIBundle\Model\ServerCollection;
+use Starmade\APIBundle\Entity\StarmadeServerEntityBuilder;
+use Starmade\APIBundle\Entity\StarmadeElasticsearchEntityRepository;
 
 use FOS\RestBundle\Util\Codes;
 
@@ -33,7 +35,10 @@ class ServersController extends FOSRestController
      */
     public function getServersManager()
     {
-        return $this->get('starmade.api.servers_manager');
+        $builder = new StarmadeServerEntityBuilder();
+        $manager = new StarmadeElasticsearchEntityRepository($builder);
+    
+        return $manager;
     }
 
     /**
@@ -62,9 +67,10 @@ class ServersController extends FOSRestController
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
 
-        $servers = $this->getServersManager()->fetch($start, $limit);
+        $servers = $this->getServersManager()->findAll($start, $limit);
+        $count = $this->getServersManager()->count();
         
-        return new ServerCollection($servers, $offset, $limit);
+        return new ServerCollection($servers, $offset, $limit, $count);
     }
 
     /**
