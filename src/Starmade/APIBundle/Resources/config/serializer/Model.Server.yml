@@ -16,23 +16,23 @@ Starmade\APIBundle\Model\Server:
       groups: [standard, restapi]
     online:
       expose: true
-      type: bool
+      type: boolean
       groups: [standard, restapi]
     timestamp:
       expose: true
-      type: datetime
+      type: integer
       groups: [standard, restapi]
     startTime:
       expose: true
-      type: datetime
+      type: array
       groups: [standard, restapi]
     connected:
       expose: true
-      type: int
+      type: integer
       groups: [standard, restapi]
     maxPlayers:
       expose: true
-      type: int
+      type: integer
       groups: [standard, restapi]
     secret:
       expose: true

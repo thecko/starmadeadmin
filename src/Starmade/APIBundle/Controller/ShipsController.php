@@ -60,10 +60,12 @@ class ShipsController extends FOSRestController {
     $offset = $paramFetcher->get('offset');
     $start = null == $offset ? 0 : $offset + 1;
     $limit = $paramFetcher->get('limit');
+    $field = $request->get('field');
+    $value = $request->get('term');
 
-    $ships = $this->getShipsManager()->findAll( $start, $limit );
+    $ships = $this->getShipsManager()->findAllBy( $field , $value , $start, $limit );
     $count = $this->getShipsManager()->count();
-
+    
     return new ShipCollection($ships, $offset, $limit, $count);
   }
 

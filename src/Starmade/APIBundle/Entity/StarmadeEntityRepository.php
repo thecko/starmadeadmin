@@ -27,6 +27,11 @@ abstract class StarmadeEntityRepository {
     public abstract function findAll( $start=0 , $limit=10);
     
     /**
+     * Returns all the entities which field contains value
+     */
+    public abstract function findAllBy( $field="" , $value="" , $start=0 , $limit=10);
+    
+    /**
      * Returns a single item by it's uniqueid
      */
     public abstract function findById( $uniqueid );

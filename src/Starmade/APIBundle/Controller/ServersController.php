@@ -37,7 +37,7 @@ class ServersController extends FOSRestController
     {
         $builder = new StarmadeServerEntityBuilder();
         $manager = new StarmadeElasticsearchEntityRepository($builder);
-    
+
         return $manager;
     }
 

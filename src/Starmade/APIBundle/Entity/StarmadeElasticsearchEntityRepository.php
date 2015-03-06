@@ -17,6 +17,7 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
 
     public function __construct(StarmadeEntityBuilder $builder) {
         parent::__construct($builder);
+        
 
         $this->client = new Client();
         $this->index = "starmade-gamedata";
@@ -144,6 +145,23 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
 //        $outdated->modify('1 minute ago');
         
         return $outdated;
+    }
+
+    public function findAllBy($field = "", $value = "", $start = 0, $limit = 10) {
+        $params = array(
+            "index" => $this->index,
+            "type" => $this->getType(),
+            "from" => $start,
+            "size" => $limit,
+        );
+        $params["body"]["query"]["term"][$field] = $value;
+        $data = $this->client->search($params);
+        $results = array();
+        foreach ($data["hits"]["hits"] as $row) {
+            $obj = $this->builder->reinstitute($row["_source"]);
+            array_push($results, $obj);
+        }
+        return $results;
     }
 
 }
