@@ -52,6 +52,8 @@ class PlayersController extends FOSRestController
      *
      * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing players.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many players to return.")
+     * @Annotations\QueryParam(name="field", default="", description="Field to search by")
+     * @Annotations\QueryParam(name="term", default="", description="Value to search") 
      *
      * @Annotations\View()
      *
@@ -65,8 +67,10 @@ class PlayersController extends FOSRestController
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
+        $field = $paramFetcher->get('field');
+        $term = $paramFetcher->get('term');
 
-        $players = $this->getPlayersManager()->findAll($start, $limit);
+        $players = $this->getPlayersManager()->findAllBy( $field , $term , $start, $limit );
         $count = $this->getPlayersManager()->count();
         
         return new PlayerCollection($players, $offset, $limit,$count);

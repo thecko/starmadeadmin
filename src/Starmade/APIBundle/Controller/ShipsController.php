@@ -48,6 +48,8 @@ class ShipsController extends FOSRestController {
    *
    * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing ships.")
    * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many ships to return.")
+   * @Annotations\QueryParam(name="field", default="", description="Field to search by")
+   * @Annotations\QueryParam(name="term", default="", description="Value to search")
    *
    * @Annotations\View()
    *
@@ -60,13 +62,13 @@ class ShipsController extends FOSRestController {
     $offset = $paramFetcher->get('offset');
     $start = null == $offset ? 0 : $offset + 1;
     $limit = $paramFetcher->get('limit');
-    $field = $request->get('field');
-    $value = $request->get('term');
+    $field = $paramFetcher->get('field');
+    $term = $paramFetcher->get('term');
 
-    $ships = $this->getShipsManager()->findAllBy( $field , $value , $start, $limit );
+    $data = $this->getShipsManager()->findAllBy( $field , $term , $start, $limit );
     $count = $this->getShipsManager()->count();
     
-    return new ShipCollection($ships, $offset, $limit, $count);
+    return new ShipCollection($data, $offset, $limit, $count);
   }
 
   /**

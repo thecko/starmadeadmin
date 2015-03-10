@@ -53,6 +53,8 @@ class ServersController extends FOSRestController
      *
      * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing servers.")
      * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many servers to return.")
+     * @Annotations\QueryParam(name="field", default="", description="Field to search by")
+     * @Annotations\QueryParam(name="term", default="", description="Value to search")
      *
      * @Annotations\View()
      *
@@ -66,8 +68,10 @@ class ServersController extends FOSRestController
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
+        $field = $paramFetcher->get('field');
+        $term = $paramFetcher->get('term');
 
-        $servers = $this->getServersManager()->findAll($start, $limit);
+        $servers = $this->getServersManager()->findAllBy( $field , $term , $start, $limit );
         $count = $this->getServersManager()->count();
         
         return new ServerCollection($servers, $offset, $limit, $count);

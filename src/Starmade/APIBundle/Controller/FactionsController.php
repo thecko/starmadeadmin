@@ -57,6 +57,8 @@ class FactionsController extends FOSRestController
      *
      * @param Request               $request      the request object
      * @param ParamFetcherInterface $paramFetcher param fetcher service
+     * @Annotations\QueryParam(name="field", default="", description="Field to search by")
+     * @Annotations\QueryParam(name="term", default="", description="Value to search")     
      *
      * @return array
      */
@@ -65,11 +67,13 @@ class FactionsController extends FOSRestController
         $offset = $paramFetcher->get('offset');
         $start = null == $offset ? 0 : $offset + 1;
         $limit = $paramFetcher->get('limit');
+        $field = $paramFetcher->get('field');
+        $term = $paramFetcher->get('term');
 
-        $factions = $this->getFactionsManager()->findAll($start, $limit);
+        $data = $this->getFactionsManager()->findAllBy( $field , $term , $start, $limit );
         $count = $this->getFactionsManager()->count();
         
-        return new FactionCollection($factions, $offset, $limit , $count);
+        return new FactionCollection($data, $offset, $limit , $count);
     }
 
     /**
