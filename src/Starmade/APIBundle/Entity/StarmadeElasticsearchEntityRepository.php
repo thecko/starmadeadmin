@@ -154,9 +154,10 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
             "from" => $start,
             "size" => $limit,
         );
-        if( $field && $value ){
-            $params["body"]["query"]["match"][$field] = $value;
+        if( $value ){
+            $params["body"]["query"]["query_string"]["query"] = "*".$value."*";
         }
+        print_r( $params );
         $data = $this->client->search($params);
         $results = array();
         foreach ($data["hits"]["hits"] as $row) {
