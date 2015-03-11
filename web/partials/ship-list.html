@@ -3,7 +3,7 @@
         <div class="col-md-2">
             <!--Sidebar content-->
 
-            Search: <input ng-model="query">
+            Search: <input ng-model="query" ng-change="queryChanged()">
             Sort by:
             <select ng-model="orderProp">
                 <option value="name">Alphabetical</option>
@@ -14,14 +14,31 @@
         <div class="col-md-10">
             <!--Body content-->
 
-            <ul class="ships">
-                <li ng-repeat="ship in ships.ships| filter:query | orderBy:orderProp" class="thumbnail ship-listing">
-                    <a href="#/ships/{{ship.uniqueid}}">{{ship.name}}</a>
-                </li>
-            </ul>
+            <table class="table table-striped ships">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Mass</th>
+                        <th>Power</th>
+                        <th>Shields</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ship in ships.data | orderBy:orderProp" class="1ship-listing">
+                        <td>
+                            <a href="#/ships/{{ship.uniqueid}}">{{ship.name}}</a>
+                        </td>
+                        <td> {{ship.mass}} </td>
+                        <td> {{ship.power}} </td>
+                        <td> {{ship.shields}} </td>
+                    </tr>
+                </tbody>
+            </table>
 
-            <pagination total-items="totalItems" items-per-page="itemsPerPage" max-size="10" ng-model="currentPage" ng-change="pageChanged()"></pagination>
 
+            <pagination total-items="totalItems" items-per-page="itemsPerPage" max-size="10" ng-model="currentPage" ng-change="queryChanged()"></pagination>
+
+            <!--
             <div class="btn-group" ng-model="itemsPerPage" dropdown is-open="status.isopen">
                 <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
                     Items per page <span class="caret"></span>
@@ -32,7 +49,7 @@
                     </li>
                 </ul>
             </div>
-
+            -->
         </div>
     </div>
 </div>

@@ -148,23 +148,31 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
     }
 
     public function findAllBy($field = "", $value = "", $start = 0, $limit = 10) {
-        $params = array(
+        $params =  $params = array(
             "index" => $this->index,
             "type" => $this->getType(),
             "from" => $start,
             "size" => $limit,
         );
         if( $value ){
-            $params["body"]["query"]["query_string"]["query"] = "*".$value."*";
+            if( $field ){
+                
+            }
+            else {
+                $params["body"]["query"]["query_string"]["query"] = "*".$value."*";
+            }
         }
-        print_r( $params );
-        $data = $this->client->search($params);
-        $results = array();
-        foreach ($data["hits"]["hits"] as $row) {
+        
+        $search = $this->client->search($params);
+        $data = array();
+        $count = $search["hits"]["total"];
+        foreach ($search["hits"]["hits"] as $row) {
             $obj = $this->builder->reinstitute($row["_source"]);
-            array_push($results, $obj);
+            array_push($data, $obj);
         }
-        return $results;
+        
+        $result = new StarmadeEntityResultset( $data , $count );
+        
+        return $result;
     }
-
 }
