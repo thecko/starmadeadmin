@@ -9,19 +9,24 @@ starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api',
         $scope.orderProp = 'name';
         $scope.itemsPerPageOptions = [10, 50, 100, 500];
 
-        $scope.queryChanged = function () {
+        $scope.pageChanged = function () {
             $scope.offset = ($scope.currentPage-1) * $scope.itemsPerPage;
             $scope.ships = Api.query({
                 resourceName: 'ships'
                 , limit: $scope.itemsPerPage
                 , offset: $scope.offset
                 , term: $scope.query
+                , order: $scope.order
             })
             .$promise.then( function(data){
                 $scope.ships = data;
                 $scope.totalItems = $scope.ships.count;
             });
         };
+        $scope.queryChanged = function(){
+            $scope.currentPage = 1;
+            $scope.pageChanged();
+        }
         Api.query({
             resourceName: 'ships'
             , limit: $scope.itemsPerPage

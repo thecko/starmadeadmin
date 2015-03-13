@@ -29,7 +29,7 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
         }
     }
 
-    public function findAll($start = 0, $limit = 10) {
+    public function findAll($start = 0, $limit = 10 , $sort="") {
         $data = $this->client->search(array(
             "index" => $this->index,
             "type" => $this->getType(),
@@ -147,13 +147,16 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
         return $outdated;
     }
 
-    public function findAllBy($field = "", $value = "", $start = 0, $limit = 10) {
+    public function findAllBy($field = "", $value = "", $start = 0, $limit = 10 , $order="") {
         $params =  $params = array(
             "index" => $this->index,
             "type" => $this->getType(),
             "from" => $start,
             "size" => $limit,
         );
+        if( $order ){
+            $params["body"]["sort"][$order]["order"] = "ASC";
+        }
         if( $value ){
             if( $field ){
                 
@@ -162,7 +165,6 @@ class StarmadeElasticsearchEntityRepository extends StarmadeEntityRepository {
                 $params["body"]["query"]["query_string"]["query"] = "*".$value."*";
             }
         }
-        
         $search = $this->client->search($params);
         $data = array();
         $count = $search["hits"]["total"];

@@ -50,6 +50,7 @@ class ShipsController extends FOSRestController {
    * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many ships to return.")
    * @Annotations\QueryParam(name="field", default="", description="Field to search by")
    * @Annotations\QueryParam(name="term", default="", description="Value to search")
+   * @Annotations\QueryParam(name="order", default="", description="Field to order by")
    *
    * @Annotations\View()
    *
@@ -64,8 +65,9 @@ class ShipsController extends FOSRestController {
     $limit = $paramFetcher->get('limit');
     $field = $paramFetcher->get('field');
     $term = $paramFetcher->get('term');
+    $order = $paramFetcher->get('order');
 
-    $resultset = $this->getShipsManager()->findAllBy( $field , $term , $start, $limit );
+    $resultset = $this->getShipsManager()->findAllBy( $field , $term , $start, $limit , $order );
     
     $data = $resultset->data();
     $count = $resultset->count();

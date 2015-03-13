@@ -24,12 +24,12 @@ abstract class StarmadeEntityRepository {
     /**
      * Returns all the entities
      */
-    public abstract function findAll( $start=0 , $limit=10);
+    public abstract function findAll( $start=0 , $limit=10 , $order="");
     
     /**
      * Returns all the entities which field contains value
      */
-    public abstract function findAllBy( $field="" , $value="" , $start=0 , $limit=10);
+    public abstract function findAllBy( $field="" , $value="" , $start=0 , $limit=10 , $order="");
     
     /**
      * Returns a single item by it's uniqueid

@@ -5,9 +5,9 @@
 
             Search: <input ng-model="query" ng-change="queryChanged()">
             Sort by:
-            <select ng-model="orderProp">
+            <select ng-model="order" ng-change="queryChanged()">
+                <option value="uniqueid" selected="selected">Id</option>
                 <option value="name">Alphabetical</option>
-                <option value="id">Id</option>
             </select>
 
         </div>
@@ -35,8 +35,7 @@
                 </tbody>
             </table>
 
-
-            <pagination total-items="totalItems" items-per-page="itemsPerPage" max-size="10" ng-model="currentPage" ng-change="queryChanged()"></pagination>
+            <pagination total-items="totalItems" items-per-page="itemsPerPage" max-size="10" ng-model="currentPage" ng-change="pageChanged()"></pagination>
 
             <!--
             <div class="btn-group" ng-model="itemsPerPage" dropdown is-open="status.isopen">
