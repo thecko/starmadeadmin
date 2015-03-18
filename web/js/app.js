@@ -4,10 +4,30 @@ var starMadeAdminApp = angular.module('starMadeAdminApp', [
   , 'starMadeAdminControllers'
   , 'starMadeAdminServices'
   , 'ui.bootstrap'
+  , 'ui.router'
 ]);
 
-starMadeAdminApp.config(['$routeProvider',
-  function($routeProvider) {
+starMadeAdminApp.config(function($stateProvider, $urlRouterProvider) {
+    
+  // For any unmatched url, redirect to /state1
+  $urlRouterProvider.otherwise("/loggedin");
+  //
+  // Now set up the states
+  $stateProvider
+    .state('loggedin', {
+      url: "/loggedin",
+      templateUrl: "partials/loggedin.html"
+    })
+    .state('loggedin.ships', {
+      url: "/ships"
+      , templateUrl: "partials/ship-list.html"
+      , controller: 'ShipListCtrl'
+      , data : {
+          page: 1
+      }
+    });
+
+    /*
     $routeProvider.
       when('/ships', {
         templateUrl: 'partials/ship-list.html',
@@ -36,4 +56,5 @@ starMadeAdminApp.config(['$routeProvider',
     otherwise({
         redirectTo: '/ships'
     });
-  }]);
+    */
+  });
