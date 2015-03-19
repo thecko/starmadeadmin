@@ -15,16 +15,13 @@ starMadeAdminApp.config(function($stateProvider, $urlRouterProvider) {
   // Now set up the states
   $stateProvider
     .state('loggedin', {
-      url: "/loggedin",
+      url: "/",
       templateUrl: "partials/loggedin.html"
     })
     .state('loggedin.ships', {
-      url: "/ships"
+      url: "ships?page&order"
       , templateUrl: "partials/ship-list.html"
       , controller: 'ShipListCtrl'
-      , data : {
-          page: 1
-      }
     });
 
     /*

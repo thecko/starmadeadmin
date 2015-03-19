@@ -1,25 +1,14 @@
 var starMadeAdminControllers = angular.module('starMadeAdminControllers', []);
 
-starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$rootScope',
-    function ($scope, Api, $rootScope ) {
-        if( !$rootScope.ships ){
-            $rootScope.ships = {
-                maxSize : 5
-                , itemsPerPage : 5
-                , currentPage : 1
-                , offset : 0
-                , order : 'name'
-                , itemsPerPageOptions : [10, 50, 100, 500]
-                , query : ''
-            };
-        }
-        
-        $scope.maxSize = $rootScope.ships.maxSize;
-        $scope.itemsPerPage = $rootScope.ships.itemsPerPage;
-        $scope.currentPage = $rootScope.ships.currentPage;
-        $scope.offset = $rootScope.ships.offset;
-        $scope.order = $rootScope.ships.order;
-        $scope.query = $rootScope.ships.query;
+starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$stateParams' ,
+    function ($scope, Api , $stateParams ) {
+
+        $scope.maxSize = 5;
+        $scope.itemsPerPage = 5;
+        $scope.currentPage = $stateParams.page;
+        $scope.offset = 0;
+        $scope.order = $stateParams.order ? $stateParams.order : 'name';
+        $scope.query = '';
 
         $scope.pageChanged = function () {
             $scope.offset = ($scope.currentPage-1) * $scope.itemsPerPage;
@@ -33,16 +22,10 @@ starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$rootScop
             .$promise.then( function(data){
                 $scope.ships = data;
                 $scope.totalItems = $scope.ships.count;
-                
-                // Store
-                $rootScope.ships.offset = $scope.offset;
-                $rootScope.ships.itemsPerPage = $scope.itemsPerPage;
-                $rootScope.ships.currentPage = $scope.currentPage;
-                $rootScope.ships.query = $scope.query;
-                $rootScope.ships.order = $scope.order;
             });
         };
         $scope.queryChanged = function(){
+            //$scope.currentPage = 1;
             $scope.pageChanged();
         }
         $scope.pageChanged();
