@@ -19,9 +19,14 @@ starMadeAdminApp.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: "partials/loggedin.html"
     })
     .state('loggedin.ships', {
-      url: "ships?page&order"
+      url: "ships?page&order&query"
       , templateUrl: "partials/ship-list.html"
       , controller: 'ShipListCtrl'
+    })
+    .state('loggedin.ships.detail', {
+      url: "ships/:shipid?page&order&query"
+      , templateUrl: "partials/ship-detail.html"
+      , controller: 'ShipDetailCtrl'
     });
 
     /*

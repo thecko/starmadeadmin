@@ -1,39 +1,53 @@
 var starMadeAdminControllers = angular.module('starMadeAdminControllers', []);
 
-starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$stateParams' ,
-    function ($scope, Api , $stateParams ) {
+starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$state' ,'$stateParams',
+    function ($scope, Api, $state, $stateParams) {
 
         $scope.maxSize = 5;
         $scope.itemsPerPage = 5;
         $scope.currentPage = $stateParams.page;
-        $scope.offset = 0;
+        $scope.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
         $scope.order = $stateParams.order ? $stateParams.order : 'name';
-        $scope.query = '';
-
+        $scope.query = $stateParams.query ? $stateParams.query : '';
+        
+        Api.query({
+            resourceName: 'ships'
+            , limit: $scope.itemsPerPage
+            , offset: $scope.offset
+            , term: $scope.query
+            , order: $scope.order
+        })
+        .$promise.then(function (data) {
+            $scope.ships = data;
+            $scope.totalItems = $scope.ships.count;
+            $scope.currentPage = Math.floor(data.offset / data.limit) + 1;
+        });
+        
         $scope.pageChanged = function () {
-            $scope.offset = ($scope.currentPage-1) * $scope.itemsPerPage;
-            Api.query({
-                resourceName: 'ships'
-                , limit: $scope.itemsPerPage
-                , offset: $scope.offset
-                , term: $scope.query
-                , order: $scope.order
-            })
-            .$promise.then( function(data){
-                $scope.ships = data;
-                $scope.totalItems = $scope.ships.count;
+            $state.go("loggedin.ships",{
+                page:$scope.currentPage
+                , order:$scope.order
+                , query:$scope.query
             });
         };
-        $scope.queryChanged = function(){
-            //$scope.currentPage = 1;
+        $scope.queryChanged = function () {
+            $scope.currentPage = 1;
             $scope.pageChanged();
         }
-        $scope.pageChanged();
+        
+        $scope.shipDetail = function( entityId ){
+            $state.go("loggedin.ships.detail",{
+                page:$scope.currentPage
+                , order:$scope.order
+                , query:$scope.query
+                , shipid: entityId
+            });
+        }
     }]);
 
-starMadeAdminControllers.controller('ShipDetailCtrl', ['$scope', '$routeParams', 'Api',
-    function ($scope, $routeParams, Api) {
-        $scope.ship = Api.get({resourceName: 'ships', entityId: $routeParams.shipId});
+starMadeAdminControllers.controller('ShipDetailCtrl'['$scope', 'Api', '$state' ,'$stateParams',
+    function ($scope, Api, $state, $stateParams) {
+        $scope.ship = Api.get({resourceName: 'ships', entityId: $stateParams.shipid});
     }]);
 
 starMadeAdminControllers.controller('CharacterListCtrl', ['$scope', 'Api',
