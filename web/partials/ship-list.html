@@ -28,7 +28,7 @@
                 <tbody>
                     <tr ng-repeat="ship in ships.data | orderBy:orderProp" class="1ship-listing">
                         <td>
-                            <a ui-sref="loggedin.ships.detail/{{ship.uniqueid}}">{{ship.name}}</a>
+                            <a ng-href="#/ships/{{ship.uniqueid}}">{{ship.name}}</a>
                         </td>
                         <td> {{ship.mass}} </td>
                         <td> {{ship.power}} </td>

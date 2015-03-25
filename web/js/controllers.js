@@ -45,9 +45,9 @@ starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$state' ,
         }
     }]);
 
-starMadeAdminControllers.controller('ShipDetailCtrl'['$scope', 'Api', '$state' ,'$stateParams',
+starMadeAdminControllers.controller('ShipDetailCtrl',['$scope', 'Api', '$state' ,'$stateParams',
     function ($scope, Api, $state, $stateParams) {
-        $scope.ship = Api.get({resourceName: 'ships', entityId: $stateParams.shipid});
+        $scope.ship = Api.get({resourceName: 'ships', entityId: $stateParams.uniqueid});
     }]);
 
 starMadeAdminControllers.controller('CharacterListCtrl', ['$scope', 'Api',

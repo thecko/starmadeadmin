@@ -23,8 +23,8 @@ starMadeAdminApp.config(function($stateProvider, $urlRouterProvider) {
       , templateUrl: "partials/ship-list.html"
       , controller: 'ShipListCtrl'
     })
-    .state('loggedin.ships.detail', {
-      url: "ships/:shipid?page&order&query"
+    .state('loggedin.shipdetail', {
+      url: "ships/:uniqueid"
       , templateUrl: "partials/ship-detail.html"
       , controller: 'ShipDetailCtrl'
     });
