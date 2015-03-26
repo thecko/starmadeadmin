@@ -10,6 +10,7 @@
         <script src="js/angular-resource.min.js"></script>    
         <script src="js/angular-animate.min.js"></script>    
         <script src="js/angular-ui-router.js"></script>
+        <script src="js/angular-local-storage.js"></script>
         <script src="js/app.js"></script>
         <script src="js/services.js"></script>
         <script src="js/controllers.js"></script>

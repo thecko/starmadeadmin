@@ -1,15 +1,20 @@
 var starMadeAdminControllers = angular.module('starMadeAdminControllers', []);
 
-starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$state', '$stateParams', '$timeout',
-    function ($scope, Api, $state, $stateParams, $timeout) {
+starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$state', '$stateParams', '$timeout', 'localStorageService',
+    function ($scope, Api, $state, $stateParams, $timeout, localStorageService ) {
 
+        $scope.currentPage = $stateParams.page ? $stateParams.page : localStorageService.get("ships.page") ;
+        $scope.order = $stateParams.order ? $stateParams.order : localStorageService.get("ships.order");
+        $scope.query = $stateParams.query ? $stateParams.query : localStorageService.get('ships.query');
         $scope.maxSize = 5;
         $scope.itemsPerPage = 5;
-        $scope.currentPage = $stateParams.page;
         $scope.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
-        $scope.order = $stateParams.order ? $stateParams.order : 'name';
-        $scope.query = $stateParams.query ? $stateParams.query : '';
 
+        // Store
+        localStorageService.set( 'ships.page' , $scope.currentPage);
+        localStorageService.set( 'ships.order' , $scope.order);
+        localStorageService.set( 'ships.query' , $scope.query);
+        
         Api.query({
             resourceName: 'ships'
             , limit: $scope.itemsPerPage
@@ -32,14 +37,18 @@ starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$state', 
         };
 
         var timer = false;
+        var firstExecution = true;
         $scope.$watch('query', function () {
             if (timer) {
-                $timeout.cancel(timer)
+                $timeout.cancel(timer);
             }
-            timer = $timeout(function () {
-                $scope.currentPage = 1;
-                $scope.pageChanged();
-            }, 1000)
+            if (!firstExecution) {
+                timer = $timeout(function () {
+                    $scope.currentPage = 1;
+                    $scope.pageChanged();
+                }, 1000);
+            }
+            firstExecution = false;
         });
 
     }]);
