@@ -24,7 +24,7 @@ starMadeAdminApp.config(function($stateProvider, $urlRouterProvider) {
       , controller: 'ShipListCtrl'
     })
     .state('loggedin.shipdetail', {
-      url: "ships/:uniqueid"
+      url: "ships/:uniqueid?page&order&query"
       , templateUrl: "partials/ship-detail.html"
       , controller: 'ShipDetailCtrl'
     });

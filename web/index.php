@@ -29,8 +29,6 @@
         </div>
         <div class="container">
             <div ui-view></div>
-            <a ui-sref="loggedin">Loggedin</a>
-
         </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery.js"></script>
