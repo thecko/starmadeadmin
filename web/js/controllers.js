@@ -14,6 +14,16 @@ starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$state', 
         $scope.query = $scope.query == null ? '' : $scope.query ;
         $scope.maxSize = 5;
         $scope.itemsPerPage = 5;
+        $scope.orderOptions = [
+          {
+            name : 'Id'
+            , value : 'uniqueId'
+          }
+          , {
+            name : 'Alphabetical'
+            , value : 'name'
+          }
+        ];
         
         // Data calculations
         $scope.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;

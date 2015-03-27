@@ -3,22 +3,24 @@
         <div class="col-md-2">
             <!--Sidebar content-->
 
-            Search: <input ng-model="query">
+            Search: <input class="form-control" ng-model="query">
             Sort by:
             <select ng-model="order" ng-change="queryChanged()">
                 <option value="uniqueid" selected="selected">Id</option>
                 <option value="name">Alphabetical</option>
             </select>
-            <div class="btn-group" ng-model="order" dropdown is-open="status.isopen">
+            <div class="btn-group" dropdown is-open="status.isopen">
                 <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
                     Order <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     <li ng-repeat="choice in orderOptions">
-                        <a href>{{choice}}</a>
+                        <a href ng-click="setChoiceIndex($index);$parent.open =!$parent.open">{{choice.name}}</a>
                     </li>
                 </ul>
             </div>
+            
+            <span>{{order}}</span>
             
 
         </div>
