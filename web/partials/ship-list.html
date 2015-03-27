@@ -9,6 +9,17 @@
                 <option value="uniqueid" selected="selected">Id</option>
                 <option value="name">Alphabetical</option>
             </select>
+            <div class="btn-group" ng-model="order" dropdown is-open="status.isopen">
+                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                    Order <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="choice in orderOptions">
+                        <a href>{{choice}}</a>
+                    </li>
+                </ul>
+            </div>
+            
 
         </div>
         <div class="col-md-10">
