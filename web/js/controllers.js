@@ -50,10 +50,9 @@ starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$state', 
             var params = {
                 page: $scope.currentPage
                 , order: $scope.order
+                , query : $scope.query
             }
-            if( $scope.query != "" ){
-                params.query = $scope.query;
-            }
+            
             $state.go("loggedin.ships", params);
         };
 

@@ -20,11 +20,10 @@ starMadeAdminApp.config(function($stateProvider, $urlRouterProvider, localStorag
       templateUrl: "partials/loggedin.html"
     })
     .state('loggedin.ships', {
-      url: "ships"
+      url: "ships?page&order&query"
       , params : {
         page : 1
         , order : 'name'
-        , query : null
       }
       , templateUrl: "partials/ship-list.html"
       , controller: 'ShipListCtrl'
