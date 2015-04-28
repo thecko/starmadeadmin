@@ -1,38 +1,33 @@
 var starMadeAdminControllers = angular.module('starMadeAdminControllers', []);
 
 starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$state', '$stateParams', '$timeout', 'localStorageService',
-    function ($scope, Api, $state, $stateParams, $timeout, localStorageService ) {
+    function ($scope, Api, $state, $stateParams, $timeout, localStorageService) {
 
         // Retrieve variables
-        $scope.currentPage = $stateParams.page ? $stateParams.page : localStorageService.get("ships.page") ;
+        $scope.currentPage = $stateParams.page ? $stateParams.page : localStorageService.get("ships.page");
         $scope.order = $stateParams.order ? $stateParams.order : localStorageService.get("ships.order");
         $scope.query = $stateParams.query ? $stateParams.query : localStorageService.get('ships.query');
-        
+
         // Default values if not set by params or local storage
-        $scope.currentPage = $scope.currentPage == null ? 1 : $scope.currentPage ;
-        $scope.order = $scope.order == null ? 'name' : $scope.order ;
-        $scope.query = $scope.query == null ? '' : $scope.query ;
+        $scope.currentPage = $scope.currentPage == null ? 1 : $scope.currentPage;
+        $scope.order = $scope.order == null ? 'name' : $scope.order;
+        $scope.query = $scope.query == null ? '' : $scope.query;
         $scope.maxSize = 5;
         $scope.itemsPerPage = 5;
         $scope.orderOptions = [
-          {
-            name : 'Id'
-            , value : 'uniqueId'
-          }
-          , {
-            name : 'Alphabetical'
-            , value : 'name'
-          }
+            {
+                name: 'Id'
+                , value: 'uniqueId'
+            }
+            , {
+                name: 'Alphabetical'
+                , value: 'name'
+            }
         ];
-        
+
         // Data calculations
         $scope.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
 
-        // Store
-        localStorageService.set( 'ships.page' , $scope.currentPage);
-        localStorageService.set( 'ships.order' , $scope.order);
-        localStorageService.set( 'ships.query' , $scope.query);
-        
         Api.query({
             resourceName: 'ships'
             , limit: $scope.itemsPerPage
@@ -47,10 +42,17 @@ starMadeAdminControllers.controller('ShipListCtrl', ['$scope', 'Api', '$state', 
                 });
 
         $scope.pageChanged = function () {
+            // Store
+            localStorageService.set('ships.page', $scope.currentPage);
+            localStorageService.set('ships.order', $scope.order);
+            localStorageService.set('ships.query', $scope.query);
+
             var params = {
                 page: $scope.currentPage
                 , order: $scope.order
-                , query: $scope.query
+            }
+            if( $scope.query != "" ){
+                params.query = $scope.query;
             }
             $state.go("loggedin.ships", params);
         };
